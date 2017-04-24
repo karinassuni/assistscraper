@@ -2,6 +2,10 @@ import regex
 
 
 def courses(raw_course_lines):
+    to_tokens, from_tokens = _split_tokens_(raw_course_lines)
+
+
+def _split_tokens_(raw_course_lines):
     TO_lines = []
     FROM_lines = []
     for line in raw_course_lines:
@@ -9,8 +13,7 @@ def courses(raw_course_lines):
         TO_lines.append(to)
         FROM_lines.append(from_)
 
-    _tokenize_(TO_lines)
-    _tokenize_(FROM_lines)
+    return _tokenize_(TO_lines), _tokenize_(FROM_lines)
 
 
 def _tokenize_(course_line_list):
