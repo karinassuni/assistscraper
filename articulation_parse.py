@@ -31,7 +31,7 @@ def _tokenize_(course_line_list):
         |^(?<FROM_or>\ {2,3}OR)
         |^(?<TO_or>\ {4,}OR)
 
-        |^(?<no_articulation>NO\ COURSE\ ARTICULATED)
+        |^(?<no_articulation>[Nn][Oo].+[Aa]rticulat)
 
         |^\ +(?<title_contd>\ (?&title_words))
         """,
@@ -68,6 +68,8 @@ def _tokenize_(course_line_list):
                 processing_course = True
             elif match.captures("title_contd"):
                 course["title"] += match.captures("title_contd")[0]
+            elif match.captures("no_articulation"):
+                tokens.append({'code': None})
 
             if match.captures("and"):
                 processing_and = True
