@@ -2,10 +2,9 @@ import regex
 from treelib import Tree, Node
 
 
-def courses(raw_course_lines):
-    to_tokens, from_tokens = _split_tokens_(raw_course_lines)
-    _treeify_(to_tokens).show()
-    _treeify_(from_tokens).show()
+def parse(raw_course_line_halves):
+    tokens = _tokenize_(raw_course_line_halves)
+    return _treeify_(tokens)
 
 
 def _treeify_(tokens):
@@ -79,18 +78,7 @@ def _treeify_(tokens):
     return tree
 
 
-def _split_tokens_(raw_course_lines):
-    TO_lines = []
-    FROM_lines = []
-    for line in raw_course_lines:
-        to, from_ = line.split('|')
-        TO_lines.append(to)
-        FROM_lines.append(from_)
-
-    return _tokenize_(TO_lines), _tokenize_(FROM_lines)
-
-
-def _tokenize_(course_line_list):
+def _tokenize_(raw_course_line_halves):
     pattern = regex.compile(r"""
         (?(DEFINE)
             (?<title_char>[\w,;:\"\'&+-/])
@@ -126,7 +114,7 @@ def _tokenize_(course_line_list):
     processing_course = False
     processing_and = False
 
-    for line in course_line_list:
+    for line in raw_course_line_halves:
         match = pattern.match(line)
         if match is not None:
             if processing_course and not match.captures("title_contd"):

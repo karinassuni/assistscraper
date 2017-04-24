@@ -1,21 +1,35 @@
-import articulation_parse
 import re
+from . import courses_parser
+from .lxml_helpers import document, find_select, option_labels
 from copy import copy
 from lxml import html
-from lxml_helpers import document, find_select, option_labels
 
 
-def articulation_year():
-    if not articulation_year.year:
+def current_articulation_year():
+    if not current_articulation_year.year:
         # Look at any institution page to find the year; DAC was arbitrary
         # "ay" = "Articulation Year"
         years = option_labels(find_select(document("DAC.html"), "ay"))
-        articulation_year.year = years[0]
-    return articulation_year.year
-articulation_year.year = None
+        current_articulation_year.year = years[0]
+    return current_articulation_year.year
+current_articulation_year.year = None
 
 
-def all_institutions_map():
+def to_and_from_institutions():
+    all = _all_institutions_map_()
+    to_names = _to_institution_names_()
+
+    to = {}
+    from_ = copy(all)
+    for name, form_value in all.items():
+        if name in to_names:
+            to[name] = form_value
+            from_.pop(name, None)
+
+    return to, from_
+
+
+def _all_institutions_map_():
     # "ia" = "Institution for Articulation"
     institution_select = find_select(document("welcome.html"), "ia")
     names = option_labels(institution_select)
@@ -34,7 +48,7 @@ def all_institutions_map():
     }
 
 
-def to_institution_names():
+def _to_institution_names_():
     # Look at ANY community college page to find To institutions; "DAC" was arbitrary
     # "oia" = "Other Institution for Articulation"
     # Skip the first <option>, which is an instructional placeholder value
@@ -45,26 +59,12 @@ def to_institution_names():
     return [name_substring.match(name).group(1) for name in names]
 
 
-def to_from_tuple():
-    all = all_institutions_map()
-    to_names = to_institution_names()
-
-    to = {}
-    from_ = copy(all)
-    for name, form_value in all.items():
-        if name in to_names:
-            to[name] = form_value
-            from_.pop(name, None)
-
-    return to, from_
-
-
 def to_institution_majors_map(to_institution_form_value):
     # We only want the list of a To institution's major NAMES, so the From
     # institution doesn't matter
     document = html.parse("http://www.assist.org/web-assist/articulationAgreement.do?inst1=none&inst2=none&ia=DAC&ay={year}&oia={to}&dir=1"
                      .format(to=to_institution_form_value,
-                             year=articulation_year()
+                             year=current_articulation_year()
                      )
     )
 
@@ -89,7 +89,7 @@ def articulation_text(from_institution_form_value, to_institution_form_value,
                           .format(from_=from_institution_form_value,
                                   to=to_institution_form_value,
                                   major=major_form_value,
-                                  year=articulation_year()
+                                  year=current_articulation_year()
                           )
     )
 
@@ -101,4 +101,12 @@ def articulation_text(from_institution_form_value, to_institution_form_value,
 def course_tree(articulation_text):
     # Only course lines have '|', as a separator between FROM and TO courses
     raw_course_lines = [line for line in articulation_text.splitlines() if '|' in line]
-    return articulation_parse.courses(raw_course_lines)
+
+    TO_lines = []
+    FROM_lines = []
+    for line in raw_course_lines:
+        to, from_ = line.split('|')
+        TO_lines.append(to)
+        FROM_lines.append(from_)
+
+    return courses_parser.parse(FROM_lines)
