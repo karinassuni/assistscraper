@@ -55,6 +55,7 @@ def _tokenize_(course_line_list):
             if processing_course and not match.captures("title_contd"):
                 processing_course = False
                 tokens.append(course)
+                course = None
                 if processing_and:
                     tokens.append("&")
                     processing_and = False
@@ -80,6 +81,28 @@ def _tokenize_(course_line_list):
             if match.captures("TO_or"):
                 tokens.append("TO_or")
 
-    return tokens
+    if course:
+        tokens.append(course)
+
+    # Make EXPLICIT the implicit ANDs from consecutive courses
+    tokens_with_and = []
+
+    for i, current in enumerate(tokens):
+        tokens_with_and.append(current)
+        try:
+            next_ = tokens[i + 1]
+        except IndexError:
+            break
+        else:
+            if next_ != "FROM_or" and next_ != "&" and next_ != "TO_or" \
+               and _is_course_(next_) and _is_course_(current):
+                tokens_with_and.append("AND")
+
+    return tokens_with_and
+
+
+def _is_course_(obj):
+    return type(obj) is dict
+
 
 
