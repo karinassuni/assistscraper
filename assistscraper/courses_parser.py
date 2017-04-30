@@ -14,7 +14,6 @@ def _treeify_(tokens):
     OPERATORS = ("AND", "TO_or", "FROM_or", "&")
     latest_course_id = ""
 
-
     def active_operator_id():
         return operators_being_processed[-1]['identifier']
 
@@ -55,6 +54,18 @@ def _treeify_(tokens):
         operators_being_processed.append({'tag': operator_tag,
                                           'identifier': operator.identifier})
 
+    def add_course(course):
+        nonlocal tree, latest_course_id
+
+        if any(_is_course_(sibling.data)
+               and sibling.data['code'] == course['code']
+               for sibling in tree.children(active_operator_id())):
+            return
+
+        node = Node(tag=course['code'], data=course)
+        tree.add_node(node, parent=active_operator_id())
+        latest_course_id = node.identifier
+
 
     for token in tokens:
         if token in OPERATORS:
@@ -71,9 +82,7 @@ def _treeify_(tokens):
                 put_node_into_operator_subtree(latest_course_id, token)
 
         elif _is_course_(token):
-            course = Node(tag=token['code'], data=token)
-            tree.add_node(course, parent=active_operator_id())
-            latest_course_id = course.identifier
+            add_course(token)
 
     return tree
 
@@ -145,6 +154,16 @@ def _tokenize_(raw_course_line_halves):
 
             if match.captures("TO_or"):
                 tokens.append("TO_or")
+
+        elif regex.match('^\s*$', line):
+            continue
+
+        else:
+            processing_and = False
+            if processing_course:
+                assert course is not None
+                tokens.append(course)
+            processing_course = False
 
     if course:
         tokens.append(course)
