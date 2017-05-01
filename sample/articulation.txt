@@ -1,7 +1,8 @@
+
                         Articulation Agreement by Major                         
                     Effective during the 16-17 Academic Year                    
      
-====Applied Mathematics, Concentration in Economics & Actuarial Science, B.S.===
+                ====Engineering - Computer Engineering, B.S.====                
                                                                                 
 IMPORTANT TRANSFER INFORMATION:                                   
                                                                                 
@@ -57,22 +58,24 @@ approved PE waiver.  Majors which have approved PE waivers are noted on the
                                                                                 
 --------------------------------------------------------------------------------
                                                                                 
+In order to be successful in this major you must complete the following
+articulated courses prior to transfer, earning grades of "C" or better on the
+first attempt.  Students who struggle to achieve this should strongly consider
+selecting a different major.
+                                                                                
+--------------------------------------------------------------------------------
+                                                                                
+Please note: All courses in the Preparation and Required in Major must be
+completed with a grade of "C- or better". The following Preparation for the
+Major courses must be completed with a grade of "C or better": ENGL 001B, MATH
+30, 31, PHYS 50 and 51.
+                                                                                
+--------------------------------------------------------------------------------
+                                                                                
 Second Course in English Composition:                                    
                                                                                 
-ENGL 2    Critical Thinking and       (3)|EWRT 2     Critical Reading,       (5)
-          Writing                        |           Writing and Thinking 
-                                         |   OR 
-                                         |EWRT 2H    Critical Reading,       (5)
-                                         |           Writing and Thinking - 
-                                         |           HONORS 
-                                         |   OR 
-                                         |PHIL 3     Critical Thinking and   (5)
-                                         |           Writing 
-                                         |   OR 
-                                         |SPCH 9     Argumentation: Analysis (5)
-                                         |           of Oral and Written 
-                                         |           Communication 
-                   OR                    |                  OR                  
+(Select a course approved in CSU GE Area C2 and articulates to SJSU's ENGL 1B)  
+                                                                                
 ENGL 1B    Argument and Analysis      (3)|EWRT 1B     Reading, Writing and   (5)
                                          |            Research 
                                          |   OR 
@@ -83,77 +86,13 @@ ENGL 1B    Argument and Analysis      (3)|EWRT 1B     Reading, Writing and   (5)
                                          |            Research for Writing 
 --------------------------------------------------------------------------------
                                                                                 
-Please Note: A grade of "C-" or better is required for courses being used to
-meet any requirement in this major, including courses in preparation for the
-major.
---------------------------------------------------------------------------------
-                                                                                
 Preparation for the Major:                                               
                                                                                 
-ECON 1A    Principles of Economics:   (4)|ECON 1     Principles of           (4)
-           Macroeconomics                |           Macroeconomics 
+BIOL 10    The Living World           (3)|BIOL 10     Introductory Biology   (5)
                                          |   OR 
-                                         |ECON 1H    Principles of           (4)
-                                         |           Macroeconomics - HONORS 
+                                         |BIOL 10H    Introductory Biology - (5)
+                                         |            HONORS 
 --------------------------------------------------------------------------------
-ECON 1B    Principles of Economics:   (4)|ECON 2     Principles of           (4)
-           Microeconomics                |           Microeconomics 
-                                         |   OR 
-                                         |ECON 2H    Principles of           (4)
-                                         |           Microeconomics - HONORS 
---------------------------------------------------------------------------------
-                                                                                
-Complete one of the following courses:                                          
-                                                                                
-MATH 50    Scientific Computing I     (2)|No Current Articulation 
-   Same as: METR 50                      |                                      
-                   OR                    |                  OR                  
-CS 46A    Introduction to Programming (4)|CIS 35A     Java Programming     (4.5)
-                                         |   OR 
-   Same As: SE 46A                       |CIS 22A  &  Beginning            (4.5)
-                                         |            Programming 
-                                         |            Methodologies in C++ 
-                                         |CIS 22B     Intermediate         (4.5)
-                                         |            Programming 
-                                         |            Methodologies in C++ 
-                                         |   OR 
-                                         |CIS 22A  &  Beginning            (4.5)
-                                         |            Programming 
-                                         |            Methodologies in C++ 
-                                         |CIS 22BH    Intermediate         (4.5)
-                                         |            Programming 
-                                         |            Methodologies in C++ 
-                                         |            - HONORS 
-                                         |   OR 
-                                         |CIS 36A  &  Introduction to      (4.5)
-                                         |            Computer Programming 
-                                         |            Using Java 
-                                         |CIS 36B     Intermediate Problem (4.5)
-                                         |            Solving in Java 
-                   OR                    |                  OR                  
-CS 49C    Programming in C            (3)|CIS 26A     C as a Second        (4.5)
-                                         |            Programming Language 
-                                         |   OR 
-                                         |CIS 22A  &  Beginning            (4.5)
-                                         |            Programming 
-                                         |            Methodologies in C++ 
-                                         |CIS 22B     Intermediate         (4.5)
-                                         |            Programming 
-                                         |            Methodologies in C++ 
-                                         |   OR 
-                                         |CIS 22A  &  Beginning            (4.5)
-                                         |            Programming 
-                                         |            Methodologies in C++ 
-                                         |CIS 22BH    Intermediate         (4.5)
-                                         |            Programming 
-                                         |            Methodologies in C++ 
-                                         |            - HONORS 
-                   OR                    |                  OR                  
-CS 49J    Programming in Java         (3)|CIS 35A    Java Programming      (4.5)
---------------------------------------------------------------------------------
-                                                                                
-Lower Division Requirements of the Major:                                    
-                                                                            
 MATH 30    Calculus I                 (3)|MATH 1A     Calculus               (5)
                                          |   OR 
                                          |MATH 1AH    Calculus - HONORS      (5)
@@ -174,14 +113,65 @@ MATH 32    Calculus III               (3)|MATH 1C     Calculus               (5)
 --------------------------------------------------------------------------------
 MATH 42    Discrete Mathematics       (3)|MATH 22    Discrete Mathematics    (5)
 --------------------------------------------------------------------------------
-                                                                                
-Additional Major Requirements:                                           
-                                                                                
-MATH 129A    Linear Algebra I         (3)|MATH 2B    Linear Algebra          (5)
-                                                                                
-Content Credit Only - Community College math courses articulated with SJSU\'s
-Math 129A will meet course content requirements for the major but will not
+MATH 123    Differential Equations    (3)|MATH 2A &  Differential Equations  (5)
+            and Linear Algebra           |                                      
+                                         |MATH 2B    Linear Algebra          (5)
+Content Credit Only - Community College math courses articulated with SJSU's
+Math 123 will meet course content requirements for the major but will not
 receive upper division credit.
+--------------------------------------------------------------------------------
+PHYS 50    General Physics/Mechanics  (4)|PHYS 4A    Physics for Scientists  (6)
+                                         |           and Engineers: 
+                                         |           Mechanics 
+--------------------------------------------------------------------------------
+PHYS 51    General                    (4)|PHYS 4B    Physics for Scientists  (6)
+           Physics/Electricity and       |           and Engineers: 
+           Magnetism                     |           Electricity and 
+                                         |           Magnetism 
+--------------------------------------------------------------------------------
+                                                                                
+Lower Division Requirements of the Major:                                    
+                                                                            
+CMPE 30    Programming Concepts and   (3)|CIS 22A    Beginning Programming (4.5)
+           Methodology                   |           Methodologies in C++ 
+                                         |   OR 
+                                         |CIS 27     Programming in C++    (4.5)
+                                         |           for C/Java 
+                                         |           Programmers 
+                                         |   OR 
+                                         |CIS 35A    Java Programming      (4.5)
+--------------------------------------------------------------------------------
+CMPE 50    Object-Oriented Concepts   (3)|CIS 22B     Intermediate         (4.5)
+           and Methodology               |            Programming 
+                                         |            Methodologies in C++ 
+                                         |   OR 
+                                         |CIS 22BH &  Intermediate         (4.5)
+                                         |            Programming 
+                                         |            Methodologies in C++ 
+                                         |            - HONORS 
+                                         |CIS 22C     Data Abstraction and (4.5)
+                                         |            Structures 
+                                         |   OR 
+                                         |CIS 22CH    Data Abstraction and (4.5)
+                                         |            Structures - HONORS 
+                                         |   OR 
+                                         |CIS 35A  &  Java Programming     (4.5)
+                                         |CIS 22C     Data Abstraction and (4.5)
+                                         |            Structures 
+                                         |   OR 
+                                         |CIS 22CH &  Data Abstraction and (4.5)
+                                         |            Structures - HONORS 
+                                         |[(CIS 22B or 22BH) & (CIS 22C or 
+                                         |22CH)] OR [CIS 35A & (CIS 22C or 
+                                         |22CH)] 
+--------------------------------------------------------------------------------
+ENGR 10    Introduction to            (3)|ENGR 10    Introduction to       (4.5)
+           Engineering                   |           Engineering 
+--------------------------------------------------------------------------------
+EE 97    Introductory Electrical      (1)|No Current Articulation 
+         Engineering Laboratory          |                                      
+--------------------------------------------------------------------------------
+EE 98    Introduction to Circuit      (3)|ENGR 37    Introduction to Circuit (5)
+         Analysis                        |           Analysis 
+--------------------------------------------------------------------------------
 END OF MAJOR
-
-

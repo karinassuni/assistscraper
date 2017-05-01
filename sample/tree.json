@@ -1,0 +1,377 @@
+{
+    "AND": {
+        "children": [
+            {
+                "FROM_or": {
+                    "children": [
+                        {
+                            "EWRT 1B": {
+                                "data": {
+                                    "code": "EWRT 1B",
+                                    "title": "Reading, Writing and Research",
+                                    "units": 5
+                                }
+                            }
+                        },
+                        {
+                            "EWRT 1BH": {
+                                "data": {
+                                    "code": "EWRT 1BH",
+                                    "title": "Reading, Writing and Research - HONORS",
+                                    "units": 5
+                                }
+                            }
+                        },
+                        {
+                            "ESL 6": {
+                                "data": {
+                                    "code": "ESL 6",
+                                    "title": "Critical Reading and Research for Writing",
+                                    "units": 5
+                                }
+                            }
+                        }
+                    ],
+                    "data": null
+                }
+            },
+            {
+                "FROM_or": {
+                    "children": [
+                        {
+                            "BIOL 10": {
+                                "data": {
+                                    "code": "BIOL 10",
+                                    "title": "Introductory Biology",
+                                    "units": 5
+                                }
+                            }
+                        },
+                        {
+                            "BIOL 10H": {
+                                "data": {
+                                    "code": "BIOL 10H",
+                                    "title": "Introductory Biology - HONORS",
+                                    "units": 5
+                                }
+                            }
+                        }
+                    ],
+                    "data": null
+                }
+            },
+            {
+                "FROM_or": {
+                    "children": [
+                        {
+                            "MATH 1A": {
+                                "data": {
+                                    "code": "MATH 1A",
+                                    "title": "Calculus",
+                                    "units": 5
+                                }
+                            }
+                        },
+                        {
+                            "MATH 1AH": {
+                                "data": {
+                                    "code": "MATH 1AH",
+                                    "title": "Calculus - HONORS",
+                                    "units": 5
+                                }
+                            }
+                        }
+                    ],
+                    "data": null
+                }
+            },
+            {
+                "FROM_or": {
+                    "children": [
+                        {
+                            "MATH 1B": {
+                                "data": {
+                                    "code": "MATH 1B",
+                                    "title": "Calculus",
+                                    "units": 5
+                                }
+                            }
+                        },
+                        {
+                            "&": {
+                                "children": [
+                                    {
+                                        "MATH 1BH": {
+                                            "data": {
+                                                "code": "MATH 1BH",
+                                                "title": "Calculus - HONORS",
+                                                "units": 5
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "MATH 1C": {
+                                            "data": {
+                                                "code": "MATH 1C",
+                                                "title": "Calculus",
+                                                "units": 5
+                                            }
+                                        }
+                                    }
+                                ],
+                                "data": null
+                            }
+                        },
+                        {
+                            "MATH 1CH": {
+                                "data": {
+                                    "code": "MATH 1CH",
+                                    "title": "Calculus - HONORS",
+                                    "units": 5
+                                }
+                            }
+                        }
+                    ],
+                    "data": null
+                }
+            },
+            {
+                "FROM_or": {
+                    "children": [
+                        {
+                            "MATH 1C": {
+                                "data": {
+                                    "code": "MATH 1C",
+                                    "title": "Calculus",
+                                    "units": 5
+                                }
+                            }
+                        },
+                        {
+                            "&": {
+                                "children": [
+                                    {
+                                        "MATH 1CH": {
+                                            "data": {
+                                                "code": "MATH 1CH",
+                                                "title": "Calculus - HONORS",
+                                                "units": 5
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "MATH 1D": {
+                                            "data": {
+                                                "code": "MATH 1D",
+                                                "title": "Calculus",
+                                                "units": 5
+                                            }
+                                        }
+                                    }
+                                ],
+                                "data": null
+                            }
+                        },
+                        {
+                            "MATH 1DH": {
+                                "data": {
+                                    "code": "MATH 1DH",
+                                    "title": "Calculus - HONORS",
+                                    "units": 5
+                                }
+                            }
+                        }
+                    ],
+                    "data": null
+                }
+            },
+            {
+                "MATH 22": {
+                    "data": {
+                        "code": "MATH 22",
+                        "title": "Discrete Mathematics",
+                        "units": 5
+                    }
+                }
+            },
+            {
+                "&": {
+                    "children": [
+                        {
+                            "MATH 2A": {
+                                "data": {
+                                    "code": "MATH 2A",
+                                    "title": "Differential Equations",
+                                    "units": 5
+                                }
+                            }
+                        },
+                        {
+                            "MATH 2B": {
+                                "data": {
+                                    "code": "MATH 2B",
+                                    "title": "Linear Algebra",
+                                    "units": 5
+                                }
+                            }
+                        }
+                    ],
+                    "data": null
+                }
+            },
+            {
+                "PHYS 4A": {
+                    "data": {
+                        "code": "PHYS 4A",
+                        "title": "Physics for Scientists and Engineers: Mechanics",
+                        "units": 6
+                    }
+                }
+            },
+            {
+                "PHYS 4B": {
+                    "data": {
+                        "code": "PHYS 4B",
+                        "title": "Physics for Scientists and Engineers: Electricity and Magnetism",
+                        "units": 6
+                    }
+                }
+            },
+            {
+                "FROM_or": {
+                    "children": [
+                        {
+                            "CIS 22A": {
+                                "data": {
+                                    "code": "CIS 22A",
+                                    "title": "Beginning Programming Methodologies in C++",
+                                    "units": 4.5
+                                }
+                            }
+                        },
+                        {
+                            "CIS 27": {
+                                "data": {
+                                    "code": "CIS 27",
+                                    "title": "Programming in C++ for C/Java Programmers",
+                                    "units": 4.5
+                                }
+                            }
+                        },
+                        {
+                            "CIS 35A": {
+                                "data": {
+                                    "code": "CIS 35A",
+                                    "title": "Java Programming",
+                                    "units": 4.5
+                                }
+                            }
+                        }
+                    ],
+                    "data": null
+                }
+            },
+            {
+                "FROM_or": {
+                    "children": [
+                        {
+                            "CIS 22B": {
+                                "data": {
+                                    "code": "CIS 22B",
+                                    "title": "Intermediate Programming Methodologies in C++",
+                                    "units": 4.5
+                                }
+                            }
+                        },
+                        {
+                            "&": {
+                                "children": [
+                                    {
+                                        "CIS 22BH": {
+                                            "data": {
+                                                "code": "CIS 22BH",
+                                                "title": "Intermediate Programming Methodologies in C++ - HONORS",
+                                                "units": 4.5
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "CIS 22C": {
+                                            "data": {
+                                                "code": "CIS 22C",
+                                                "title": "Data Abstraction and Structures",
+                                                "units": 4.5
+                                            }
+                                        }
+                                    }
+                                ],
+                                "data": null
+                            }
+                        },
+                        {
+                            "CIS 22CH": {
+                                "data": {
+                                    "code": "CIS 22CH",
+                                    "title": "Data Abstraction and Structures - HONORS",
+                                    "units": 4.5
+                                }
+                            }
+                        },
+                        {
+                            "&": {
+                                "children": [
+                                    {
+                                        "CIS 35A": {
+                                            "data": {
+                                                "code": "CIS 35A",
+                                                "title": "Java Programming",
+                                                "units": 4.5
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "CIS 22C": {
+                                            "data": {
+                                                "code": "CIS 22C",
+                                                "title": "Data Abstraction and Structures",
+                                                "units": 4.5
+                                            }
+                                        }
+                                    }
+                                ],
+                                "data": null
+                            }
+                        }
+                    ],
+                    "data": null
+                }
+            },
+            {
+                "ENGR 10": {
+                    "data": {
+                        "code": "ENGR 10",
+                        "title": "Introduction to Engineering",
+                        "units": 4.5
+                    }
+                }
+            },
+            {
+                "b5237918-33ce-11e7-b2cf-c4b301d2f197": {
+                    "data": {
+                        "code": null
+                    }
+                }
+            },
+            {
+                "ENGR 37": {
+                    "data": {
+                        "code": "ENGR 37",
+                        "title": "Introduction to Circuit Analysis",
+                        "units": 5
+                    }
+                }
+            }
+        ],
+        "data": null
+    }
+}
