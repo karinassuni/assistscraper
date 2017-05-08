@@ -1,10 +1,23 @@
 import regex
+from copy import copy, deepcopy
 from treelib import Tree, Node
 
 
-def parse(raw_course_line_halves):
-    tokens = _tokenize_(raw_course_line_halves)
-    return _treeify_(tokens)
+def parse(raw_course_lines):
+    TO_lines, FROM_lines = _split_lines_(raw_course_lines)
+    return _treeify_(_combine_tokens_(_tokenize_(TO_lines),
+                                      _tokenize_(FROM_lines)))
+
+
+def _split_lines_(raw_course_lines):
+    TO_lines = []
+    FROM_lines = []
+    for line in raw_course_lines:
+        to, from_ = line.split('|')
+        TO_lines.append(to)
+        FROM_lines.append(from_)
+    
+    return TO_lines, FROM_lines
 
 
 def _treeify_(tokens):
@@ -58,16 +71,29 @@ def _treeify_(tokens):
 
 
     def add_course(course):
-        nonlocal tree, latest_course_id
+        nonlocal latest_course_id
 
-        if any(_is_course_(sibling.data)
-               and sibling.data['code'] == course['code']
-               for sibling in tree.children(active_operator_id())):
-            return
+        # Handle redundant course
+        try:
+            original = [sibling
+                         for sibling in tree.children(active_operator_id())
+                         if _is_course_(sibling.data)
+                         and sibling.data['code'] == course['code']
+                        ][0]
+        except IndexError:
+            course_node = Node(tag=course['code'], data=course)
+            tree.add_node(course_node, parent=active_operator_id())
+            latest_course_id = course_node.identifier
+        else:
+            if 'mapping' in course:
+                original.data['mapping'] = course['mapping']
+                latest_course_id = original.identifier
 
-        node = Node(tag=course['code'], data=course)
-        tree.add_node(node, parent=active_operator_id())
-        latest_course_id = node.identifier
+
+    def transfer_mapping(source, target):
+        mapping = source['mapping']
+        source.pop('mapping', None)
+        target["mapping"] = mapping
 
 
     for token in tokens:
@@ -75,8 +101,12 @@ def _treeify_(tokens):
             precedence = precedence_level(token['operator'])
 
             if precedence == 1:
+                former_operator = tree.get_node(active_operator_id()).data
                 if pop_back_to_operator(token):
-                    continue
+                    if active_operator_id() == "root":
+                        latest_course = tree.get_node(latest_course_id).data
+                        assert 'mapping' in latest_course
+                        transfer_mapping(latest_course, former_operator)
                 else:
                     put_node_into_operator_subtree(active_operator_id(), token)
 
@@ -90,6 +120,28 @@ def _treeify_(tokens):
             add_course(token)
 
     return tree
+
+
+def _combine_tokens_(TO_tokens, FROM_tokens):
+    combined_tokens = copy(FROM_tokens)
+    TO_OPERATORS = ("AND", "TO_or")
+    TO_courses = [token for token in TO_tokens if _is_course_(token)]
+    last_course_index = -1
+
+    def make_mapping():
+        combined_tokens[last_course_index] = (
+            deepcopy(FROM_tokens[last_course_index])
+        )
+        combined_tokens[last_course_index]['mapping'] = TO_courses.pop(0)
+
+    for i, token in enumerate(FROM_tokens):
+        if _is_operator_(token) and token['operator'] in TO_OPERATORS:
+            make_mapping()
+        else:
+            last_course_index = i
+    make_mapping()
+
+    return combined_tokens
 
 
 def _tokenize_(raw_course_line_halves):

@@ -83,30 +83,38 @@ def to_institution_majors_map(to_institution_form_value):
     }
 
 
-def articulation_text(from_institution_form_value, to_institution_form_value,
-                 major_form_value):
-    document = html.parse("http://web2.assist.org/cgi-bin/REPORT_2/Rep2.pl?aay={year}&dora={major}&oia={to}&ay={year}&event=19&ria={to}&agreement=aa&ia={from_}&sia={from_}&dir=1&&sidebar=false&rinst=left&mver=2&kind=5&dt=2"
-                          .format(from_=from_institution_form_value,
-                                  to=to_institution_form_value,
-                                  major=major_form_value,
-                                  year=current_articulation_year()
-                          )
+def articulation_url(from_institution_form_value, to_institution_form_value,
+                     major_form_value):
+    return (
+        "http://web2.assist.org/cgi-bin/REPORT_2/Rep2.pl?aay={year}&dora={major}&oia={to}&ay={year}&event=19&ria={to}&agreement=aa&ia={from_}&sia={from_}&dir=1&&sidebar=false&rinst=left&mver=2&kind=5&dt=2"
+        .format(
+            from_=from_institution_form_value,
+            to=to_institution_form_value,
+            major=major_form_value,
+            year=current_articulation_year()
+        )
     )
 
+
+def articulation_text_from_html(raw_html):
     return ''.join(
-        document.xpath('//pre/descendant-or-self::*/text()')
+        html.fromstring(raw_html).xpath('//pre/descendant-or-self::*/text()')
     )
+
+
+def articulation_text_from_url(url):
+    return ''.join(
+        html.parse(url).xpath('//pre/descendant-or-self::*/text()')
+    )
+
+
+def articulation_text_from_form_values(from_institution, to_institution, major):
+    return articulation_text_from_url(articulation_url(from_institution,
+                                                       to_institution, major))
 
 
 def course_tree(articulation_text):
     # Only course lines have '|', as a separator between FROM and TO courses
     raw_course_lines = [line for line in articulation_text.splitlines() if '|' in line]
 
-    TO_lines = []
-    FROM_lines = []
-    for line in raw_course_lines:
-        to, from_ = line.split('|')
-        TO_lines.append(to)
-        FROM_lines.append(from_)
-
-    return courses_parser.parse(FROM_lines)
+    return courses_parser.parse(raw_course_lines)

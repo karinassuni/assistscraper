@@ -32,7 +32,13 @@
                             }
                         }
                     ],
-                    "data": null
+                    "data": {
+                        "mapping": {
+                            "code": "ENGL 1B",
+                            "title": "Argument and Analysis",
+                            "units": 3
+                        }
+                    }
                 }
             },
             {
@@ -57,7 +63,13 @@
                             }
                         }
                     ],
-                    "data": null
+                    "data": {
+                        "mapping": {
+                            "code": "BIOL 10",
+                            "title": "The Living World",
+                            "units": 3
+                        }
+                    }
                 }
             },
             {
@@ -82,7 +94,13 @@
                             }
                         }
                     ],
-                    "data": null
+                    "data": {
+                        "mapping": {
+                            "code": "MATH 30",
+                            "title": "Calculus I",
+                            "units": 3
+                        }
+                    }
                 }
             },
             {
@@ -119,7 +137,7 @@
                                         }
                                     }
                                 ],
-                                "data": null
+                                "data": {}
                             }
                         },
                         {
@@ -132,7 +150,13 @@
                             }
                         }
                     ],
-                    "data": null
+                    "data": {
+                        "mapping": {
+                            "code": "MATH 31",
+                            "title": "Calculus II",
+                            "units": 4
+                        }
+                    }
                 }
             },
             {
@@ -169,7 +193,7 @@
                                         }
                                     }
                                 ],
-                                "data": null
+                                "data": {}
                             }
                         },
                         {
@@ -182,7 +206,13 @@
                             }
                         }
                     ],
-                    "data": null
+                    "data": {
+                        "mapping": {
+                            "code": "MATH 32",
+                            "title": "Calculus III",
+                            "units": 3
+                        }
+                    }
                 }
             },
             {
@@ -190,7 +220,12 @@
                     "data": {
                         "code": "MATH 22",
                         "title": "Discrete Mathematics",
-                        "units": 5
+                        "units": 5,
+                        "mapping": {
+                            "code": "MATH 42",
+                            "title": "Discrete Mathematics",
+                            "units": 3
+                        }
                     }
                 }
             },
@@ -216,7 +251,13 @@
                             }
                         }
                     ],
-                    "data": null
+                    "data": {
+                        "mapping": {
+                            "code": "MATH 123",
+                            "title": "Differential Equations and Linear Algebra",
+                            "units": 3
+                        }
+                    }
                 }
             },
             {
@@ -224,7 +265,12 @@
                     "data": {
                         "code": "PHYS 4A",
                         "title": "Physics for Scientists and Engineers: Mechanics",
-                        "units": 6
+                        "units": 6,
+                        "mapping": {
+                            "code": "PHYS 50",
+                            "title": "General Physics/Mechanics",
+                            "units": 4
+                        }
                     }
                 }
             },
@@ -233,7 +279,12 @@
                     "data": {
                         "code": "PHYS 4B",
                         "title": "Physics for Scientists and Engineers: Electricity and Magnetism",
-                        "units": 6
+                        "units": 6,
+                        "mapping": {
+                            "code": "PHYS 51",
+                            "title": "General Physics/Electricity and Magnetism",
+                            "units": 4
+                        }
                     }
                 }
             },
@@ -268,7 +319,13 @@
                             }
                         }
                     ],
-                    "data": null
+                    "data": {
+                        "mapping": {
+                            "code": "CMPE 30",
+                            "title": "Programming Concepts and Methodology",
+                            "units": 3
+                        }
+                    }
                 }
             },
             {
@@ -305,7 +362,7 @@
                                         }
                                     }
                                 ],
-                                "data": null
+                                "data": {}
                             }
                         },
                         {
@@ -339,11 +396,17 @@
                                         }
                                     }
                                 ],
-                                "data": null
+                                "data": {}
                             }
                         }
                     ],
-                    "data": null
+                    "data": {
+                        "mapping": {
+                            "code": "CMPE 50",
+                            "title": "Object-Oriented Concepts and Methodology",
+                            "units": 3
+                        }
+                    }
                 }
             },
             {
@@ -351,7 +414,12 @@
                     "data": {
                         "code": "ENGR 10",
                         "title": "Introduction to Engineering",
-                        "units": 4.5
+                        "units": 4.5,
+                        "mapping": {
+                            "code": "ENGR 10",
+                            "title": "Introduction to Engineering",
+                            "units": 3
+                        }
                     }
                 }
             },
@@ -360,7 +428,12 @@
                     "data": {
                         "code": "No Course Articulated",
                         "title": "",
-                        "units": 0
+                        "units": 0,
+                        "mapping": {
+                            "code": "EE 97",
+                            "title": "Introductory Electrical Engineering Laboratory",
+                            "units": 1
+                        }
                     }
                 }
             },
@@ -369,7 +442,12 @@
                     "data": {
                         "code": "ENGR 37",
                         "title": "Introduction to Circuit Analysis",
-                        "units": 5
+                        "units": 5,
+                        "mapping": {
+                            "code": "EE 98",
+                            "title": "Introduction to Circuit Analysis",
+                            "units": 3
+                        }
                     }
                 }
             }
