@@ -9,20 +9,22 @@ def parse(raw_course_line_halves):
 
 def _treeify_(tokens):
     tree = Tree()
-    tree.create_node(tag="AND", identifier="root")
-    operators_being_processed = [{'tag': 'AND', 'identifier': 'root'}]
-    OPERATORS = ("AND", "TO_or", "FROM_or", "&")
+    root = Node(tag="AND", identifier="root")
+    tree.add_node(root)
+    operators_being_processed = [root]
     latest_course_id = ""
 
+
     def active_operator_id():
-        return operators_being_processed[-1]['identifier']
+        return operators_being_processed[-1].identifier
 
 
     def precedence_level(op):
         if not operators_being_processed:
             return 1
 
-        active_operator = operators_being_processed[-1]['tag']
+        OPERATORS = ("AND", "TO_or", "FROM_or", "&")
+        active_operator = operators_being_processed[-1].tag
 
         if OPERATORS.index(op) < OPERATORS.index(active_operator):
             return 1
@@ -32,27 +34,28 @@ def _treeify_(tokens):
             return -1
 
 
-    def pop_back_to_higher_operator(tag):
-        nonlocal operators_being_processed
-        if any(operator['tag'] == tag for operator in operators_being_processed):
-            while len(operators_being_processed) > 1 and tag != operators_being_processed[-1]['tag']:
+    def pop_back_to_operator(operator):
+        tag = operator['operator']
+        if any(active_operator.tag == tag
+               for active_operator
+               in operators_being_processed):
+            while len(operators_being_processed) > 1 \
+                  and operators_being_processed[-1].tag != tag:
                 operators_being_processed.pop()
             return True
         else:
             return False
 
 
-    def put_node_into_operator_subtree(nid, operator_tag):
-        nonlocal tree
+    def put_node_into_operator_subtree(nid, operator):
+        operator_node = Node(tag=operator['operator'], data={})
+        parent_nid = tree.parent(nid).identifier
 
-        operator = Node(operator_tag)
+        tree.add_node(operator_node, parent_nid)
+        tree.move_node(nid, operator_node.identifier)
 
-        tree.add_node(operator,
-                      parent=tree.parent(nid).identifier)
-        tree.move_node(nid, operator.identifier)
+        operators_being_processed.append(operator_node)
 
-        operators_being_processed.append({'tag': operator_tag,
-                                          'identifier': operator.identifier})
 
     def add_course(course):
         nonlocal tree, latest_course_id
@@ -68,20 +71,22 @@ def _treeify_(tokens):
 
 
     for token in tokens:
-        if token in OPERATORS:
-            if precedence_level(token) == 1:
-                if pop_back_to_higher_operator(token):
+        if _is_operator_(token):
+            precedence = precedence_level(token['operator'])
+
+            if precedence == 1:
+                if pop_back_to_operator(token):
                     continue
                 else:
                     put_node_into_operator_subtree(active_operator_id(), token)
 
-            elif precedence_level(token) == 0:
+            elif precedence == 0:
                 continue
 
-            elif precedence_level(token) == -1:
+            elif precedence == -1:
                 put_node_into_operator_subtree(latest_course_id, token)
 
-        elif _is_course_(token):
+        else:
             add_course(token)
 
     return tree
@@ -131,7 +136,7 @@ def _tokenize_(raw_course_line_halves):
                 tokens.append(course)
                 course = None
                 if processing_and:
-                    tokens.append("&")
+                    tokens.append({'operator': '&'})
                     processing_and = False
 
             if match.captures("code"):
@@ -151,10 +156,10 @@ def _tokenize_(raw_course_line_halves):
                 processing_and = True
 
             if match.captures("FROM_or"):
-                tokens.append("FROM_or")
+                tokens.append({'operator': 'FROM_or'})
 
             if match.captures("TO_or"):
-                tokens.append("TO_or")
+                tokens.append({'operator': 'TO_or'})
 
         elif regex.match('^\s*$', line):
             continue
@@ -181,13 +186,14 @@ def _tokenize_(raw_course_line_halves):
         else:
             if next_ != "FROM_or" and next_ != "&" and next_ != "TO_or" \
                and _is_course_(next_) and _is_course_(current):
-                tokens_with_and.append("AND")
+                tokens_with_and.append({'operator': 'AND'})
 
     return tokens_with_and
 
 
 def _is_course_(obj):
-    return type(obj) is dict
+    return type(obj) is dict and "code" in obj
 
 
-
+def _is_operator_(obj):
+    return type(obj) is dict and "operator" in obj
