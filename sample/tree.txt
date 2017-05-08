@@ -40,7 +40,7 @@ AND
 │   ├── CIS 22B
 │   └── CIS 22CH
 ├── MATH 22
+├── No Course Articulated
 ├── PHYS 4A
-├── PHYS 4B
-└── b5237918-33ce-11e7-b2cf-c4b301d2f197
+└── PHYS 4B
 

@@ -144,7 +144,8 @@ def _tokenize_(raw_course_line_halves):
             elif match.captures("title_contd"):
                 course["title"] += match.captures("title_contd")[0]
             elif match.captures("no_articulation"):
-                tokens.append({'code': None})
+                tokens.append({'code': "No Course Articulated", 'title': "",
+                               'units': 0})
 
             if match.captures("and"):
                 processing_and = True

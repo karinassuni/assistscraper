@@ -356,9 +356,11 @@
                 }
             },
             {
-                "b5237918-33ce-11e7-b2cf-c4b301d2f197": {
+                "No Course Articulated": {
                     "data": {
-                        "code": null
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0
                     }
                 }
             },
