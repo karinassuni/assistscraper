@@ -3,6 +3,7 @@ from . import courses_parser
 from .lxml_helpers import document, find_select, option_labels
 from copy import copy
 from lxml import html
+from urllib.parse import urlparse, parse_qs
 
 
 def current_articulation_year():
@@ -111,6 +112,18 @@ def articulation_text_from_url(url):
 def articulation_text_from_form_values(from_institution, to_institution, major):
     return articulation_text_from_url(articulation_url(from_institution,
                                                        to_institution, major))
+
+
+def form_values_from_articulation_url(url):
+    query = parse_qs(urlparse(url).query)
+
+    # "ia" = "Institution for Articulation"
+    # "oia" = "Other Institution for Articulation"
+    from_institution = query['ia'][0]
+    to_institution = query['oia'][0]
+    major = query['dora'][0]
+
+    return from_institution, to_institution, major
 
 
 def course_tree(articulation_text):
