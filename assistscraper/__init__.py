@@ -1,11 +1,4 @@
-from .scraper import (
-    articulation_text_from_form_values,
-    articulation_text_from_html,
-    articulation_text_from_url,
-    articulation_url,
-    course_tree,
-    current_articulation_year,
-    form_values_from_articulation_url,
-    to_and_from_institutions,
-    to_institution_majors_map
-)
+from .scraper import *
+
+
+__all__ = [*scraper.__all__]

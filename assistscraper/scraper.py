@@ -6,6 +6,19 @@ from lxml import html
 from urllib.parse import urlparse, parse_qs
 
 
+__all__ = [
+    "articulation_text_from_form_values",
+    "articulation_text_from_html",
+    "articulation_text_from_url",
+    "articulation_url",
+    "course_tree",
+    "current_articulation_year",
+    "form_values_from_articulation_url",
+    "to_and_from_institutions",
+    "to_institution_majors_map"
+]
+
+
 def current_articulation_year():
     if not current_articulation_year.year:
         # Look at any institution page to find the year; DAC was arbitrary
