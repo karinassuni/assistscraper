@@ -3,7 +3,7 @@ from . import courses_parser
 from .lxml_helpers import document, find_select, option_labels
 from copy import copy
 from lxml import html
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs, quote
 
 
 __all__ = [
@@ -104,7 +104,7 @@ def articulation_url(from_institution_form_value, to_institution_form_value,
         .format(
             from_=from_institution_form_value,
             to=to_institution_form_value,
-            major=major_form_value,
+            major=quote(major_form_value),
             year=current_articulation_year()
         )
     )
