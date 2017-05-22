@@ -1,6 +1,6 @@
 import re
 from . import courses_parser
-from .lxml_helpers import document, find_select, option_labels
+from .lxml_helpers import document, find_by_name, find_select, option_labels
 from copy import copy
 from lxml import html
 from urllib.parse import urlparse, parse_qs, quote
@@ -14,8 +14,8 @@ __all__ = [
     "course_tree",
     "current_articulation_year",
     "form_values_from_articulation_url",
+    "majors_map",
     "to_and_from_institutions",
-    "to_institution_majors_map"
 ]
 
 
@@ -73,16 +73,20 @@ def _to_institution_names_():
     return [name_substring.match(name).group(1) for name in names]
 
 
-def to_institution_majors_map(to_institution_form_value):
-    # We only want the list of a To institution's major NAMES, so the From
-    # institution doesn't matter
-    document = html.parse("http://www.assist.org/web-assist/articulationAgreement.do?inst1=none&inst2=none&ia=DAC&ay={year}&oia={to}&dir=1"
-                     .format(to=to_institution_form_value,
+def majors_map(from_institution_form_value, to_institution_form_value):
+    document = html.parse("http://www.assist.org/web-assist/articulationAgreement.do?inst1=none&inst2=none&ia={from_}&ay={year}&oia={to}&dir=1"
+                     .format(from_=from_institution_form_value,
+                             to=to_institution_form_value,
                              year=current_articulation_year()
                      )
     )
 
-    major_select = find_select("dora", parent=document)
+    major_form = find_by_name("form", "major", parent=document)
+
+    if major_form is None:
+        return None
+
+    major_select = find_select("dora", parent=major_form)
     names = option_labels(major_select)
 
     name_form_value_tuple = zip(names, major_select.value_options)
