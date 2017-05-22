@@ -6,8 +6,13 @@ def document(resource_name):
 
 
 # TODO: catch IndexErrors in callers
-def find_select(document, name):
-    return document.xpath('//select[@name="{}"]'.format(name))[0]
+def find_by_name(tag, name, *, parent):
+    return parent.xpath('//{tag}[@name="{name}"]'.format(tag=tag,
+                                                         name=name))[0]
+
+
+def find_select(name, *, parent):
+    return find_by_name("select", name, parent=parent)
 
 
 def option_labels(select):

@@ -23,7 +23,7 @@ def current_articulation_year():
     if not current_articulation_year.year:
         # Look at any institution page to find the year; DAC was arbitrary
         # "ay" = "Articulation Year"
-        years = option_labels(find_select(document("DAC.html"), "ay"))
+        years = option_labels(find_select("ay", parent=document("DAC.html")))
         current_articulation_year.year = years[0]
     return current_articulation_year.year
 current_articulation_year.year = None
@@ -45,7 +45,7 @@ def to_and_from_institutions():
 
 def _all_institutions_map_():
     # "ia" = "Institution for Articulation"
-    institution_select = find_select(document("welcome.html"), "ia")
+    institution_select = find_select("ia", parent=document("welcome.html"))
     names = option_labels(institution_select)
 
     name_form_value_tuple = zip(names, institution_select.value_options)
@@ -66,7 +66,7 @@ def _to_institution_names_():
     # Look at ANY community college page to find To institutions; "DAC" was arbitrary
     # "oia" = "Other Institution for Articulation"
     # Skip the first <option>, which is an instructional placeholder value
-    names = option_labels(find_select(document("DAC.html"), "oia"))[1:]
+    names = option_labels(find_select("oia", parent=document("DAC.html")))[1:]
 
     name_substring = re.compile('\s*To:\xa0\s+(.+)\s*')
 
@@ -82,7 +82,7 @@ def to_institution_majors_map(to_institution_form_value):
                      )
     )
 
-    major_select = find_select(document, "dora")
+    major_select = find_select("dora", parent=document)
     names = option_labels(major_select)
 
     name_form_value_tuple = zip(names, major_select.value_options)
