@@ -5,10 +5,8 @@ def document(resource_name):
     return html.parse("http://www.assist.org/web-assist/" + resource_name)
 
 
-# TODO: catch IndexErrors in callers
 def find_by_name(tag, name, *, parent):
-    return parent.xpath('//{tag}[@name="{name}"]'.format(tag=tag,
-                                                         name=name))[0]
+    return parent.find('.//{tag}[@name="{name}"]'.format(tag=tag, name=name))
 
 
 def find_select(name, *, parent):
