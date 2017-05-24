@@ -16,7 +16,10 @@ __all__ = [
     "current_articulation_year",
     "fetch_articulation_text_from_codes",
     "fetch_articulation_text_from_url",
-    "fetch_major_codes_map",
+    "fetch_major_codes_map_from_codes",
+    "fetch_major_codes_map_from_url",
+    "major_codes_map_from_html",
+    "majors_url",
     "to_and_from_institution_maps",
 ]
 
@@ -80,16 +83,19 @@ def to_and_from_institution_maps():
     return to_institutions, from_institutions
 
 
-def fetch_major_codes_map(from_code, to_code):
-    root = html.parse(
+def majors_url(from_code, to_code):
+    return (
         "http://www.assist.org/web-assist/articulationAgreement.do?inst1=none&inst2=none&ia={from_}&ay={year}&oia={to}&dir=1"
         .format(
-            from_=from_code, to=to_code,
+            from_=from_code,
+            to=to_code,
             year=current_articulation_year()
         )
     )
 
-    major_form = find_by_name("form", "major", parent=root)
+
+def _major_codes_map_from_document_(lxml_document):
+    major_form = find_by_name("form", "major", parent=lxml_document)
 
     if major_form is None:
         return None
@@ -107,6 +113,18 @@ def fetch_major_codes_map(from_code, to_code):
         name: code
         for (name, code) in name_code_tuples
     }
+
+
+def major_codes_map_from_html(raw_html):
+    return _major_codes_map_from_document_(html.fromstring(raw_html))
+
+
+def fetch_major_codes_map_from_url(url):
+    return _major_codes_map_from_document_(html.parse(url))
+
+
+def fetch_major_codes_map_from_codes(from_code, to_code):
+    return fetch_major_codes_map_from_url(majors_url(from_code, to_code))
 
 
 def articulation_url(from_code, to_code, major_code):
