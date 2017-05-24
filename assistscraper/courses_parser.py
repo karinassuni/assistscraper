@@ -1,5 +1,6 @@
-import regex
 from copy import copy, deepcopy
+import regex
+
 from treelib import Tree, Node
 
 
@@ -13,10 +14,10 @@ def _split_lines_(raw_course_lines):
     TO_lines = []
     FROM_lines = []
     for line in raw_course_lines:
-        to, from_ = line.split('|')
-        TO_lines.append(to)
-        FROM_lines.append(from_)
-    
+        to_part, from_part = line.split('|')
+        TO_lines.append(to_part)
+        FROM_lines.append(from_part)
+
     return TO_lines, FROM_lines
 
 
@@ -32,18 +33,18 @@ def _treeify_(tokens):
         return operators_being_processed[-1].identifier
 
 
-    def precedence_level(op):
+    def precedence_level(operator):
         if not operators_being_processed:
             return 1
 
         OPERATORS = ("AND", "TO_or", "FROM_or", "&")
         active_operator = operators_being_processed[-1].tag
 
-        if OPERATORS.index(op) < OPERATORS.index(active_operator):
+        if OPERATORS.index(operator) < OPERATORS.index(active_operator):
             return 1
-        elif OPERATORS.index(op) == OPERATORS.index(active_operator):
+        elif OPERATORS.index(operator) == OPERATORS.index(active_operator):
             return 0
-        elif OPERATORS.index(op) > OPERATORS.index(active_operator):
+        elif OPERATORS.index(operator) > OPERATORS.index(active_operator):
             return -1
 
 
@@ -76,10 +77,10 @@ def _treeify_(tokens):
         # Handle redundant course
         try:
             original = [sibling
-                         for sibling in tree.children(active_operator_id())
-                         if _is_course_(sibling.data)
-                         and sibling.data['code'] == course['code']
-                        ][0]
+                        for sibling in tree.children(active_operator_id())
+                        if _is_course_(sibling.data)
+                        and sibling.data['code'] == course['code']
+                       ][0]
         except IndexError:
             course_node = Node(tag=course['code'], data=course)
             tree.add_node(course_node, parent=active_operator_id())
@@ -145,7 +146,8 @@ def _combine_tokens_(TO_tokens, FROM_tokens):
 
 
 def _tokenize_(raw_course_line_halves):
-    pattern = regex.compile(r"""
+    pattern = regex.compile(
+        r"""
         (?(DEFINE)
             (?<title_char>[\w,;:\"\'&+-/])
             (?<title_words>(?&title_char)+(?:\ (?&title_char)+)*)
@@ -213,7 +215,7 @@ def _tokenize_(raw_course_line_halves):
             if match.captures("TO_or"):
                 tokens.append({'operator': 'TO_or'})
 
-        elif regex.match('^\s*$', line):
+        elif regex.match(r'^\s*$', line):
             continue
 
         else:
@@ -226,26 +228,30 @@ def _tokenize_(raw_course_line_halves):
     if course:
         tokens.append(course)
 
-    # Make EXPLICIT the implicit ANDs from consecutive courses
-    tokens_with_and = []
+    def add_explicit_ANDs(tokens):
+        tokens_with_and = []
 
-    for i, current in enumerate(tokens):
-        tokens_with_and.append(current)
-        try:
-            next_ = tokens[i + 1]
-        except IndexError:
-            break
-        else:
-            if next_ != "FROM_or" and next_ != "&" and next_ != "TO_or" \
-               and _is_course_(next_) and _is_course_(current):
-                tokens_with_and.append({'operator': 'AND'})
+        # Consecutive courses = implicit AND; make an explicit token!
+        for i, current in enumerate(tokens):
+            tokens_with_and.append(current)
+            try:
+                next_ = tokens[i + 1]
+            except IndexError:
+                break
+            else:
+                if next_ != "FROM_or" and next_ != "&" and next_ != "TO_or" \
+                and _is_course_(next_) and _is_course_(current):
+                    tokens_with_and.append({'operator': 'AND'})
 
-    return tokens_with_and
+        return tokens_with_and
+
+
+    return add_explicit_ANDs(tokens)
 
 
 def _is_course_(obj):
-    return type(obj) is dict and "code" in obj
+    return isinstance(obj, dict) and "code" in obj
 
 
 def _is_operator_(obj):
-    return type(obj) is dict and "operator" in obj
+    return isinstance(obj, dict) and "operator" in obj

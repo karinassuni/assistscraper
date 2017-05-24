@@ -1,21 +1,23 @@
+from copy import copy
 import re
+from urllib.parse import urlparse, parse_qs, quote
+
+from lxml import html
+
 from . import courses_parser
 from .lxml_helpers import document, find_by_name, find_select, option_labels
-from copy import copy
-from lxml import html
-from urllib.parse import urlparse, parse_qs, quote
 
 
 __all__ = [
-    "articulation_text_from_form_values",
     "articulation_text_from_html",
-    "articulation_text_from_url",
     "articulation_url",
+    "codes_from_articulation_url",
     "course_tree",
     "current_articulation_year",
-    "form_values_from_articulation_url",
-    "majors_map",
-    "to_and_from_institutions",
+    "fetch_articulation_text_from_codes",
+    "fetch_articulation_text_from_url",
+    "fetch_major_codes_map",
+    "to_and_from_institution_maps",
 ]
 
 
@@ -29,59 +31,65 @@ def current_articulation_year():
 current_articulation_year.year = None
 
 
-def to_and_from_institutions():
-    all = _all_institutions_map_()
-    to_names = _to_institution_names_()
+def to_and_from_institution_maps():
 
-    to = {}
-    from_ = copy(all)
-    for name, form_value in all.items():
+    def all_institutions_map():
+        # "ia" = "Institution for Articulation"
+        institution_select = find_select("ia", parent=document("welcome.html"))
+        names = option_labels(institution_select)
+
+        # Each form value ends in ".html", which we don't want
+        def strip_extension(code_form_value):
+            return code_form_value.rsplit('.', 1)[0]
+
+        codes = [strip_extension(code_form_value)
+                 for code_form_value in institution_select.value_options]
+
+        name_code_tuples = zip(names, codes)
+        # Skip the first <option>, which is an instructional placeholder value
+        next(name_code_tuples)
+
+        return {
+            name.strip(): strip_extension(code)
+            for (name, code) in name_code_tuples
+        }
+
+
+    def to_institution_names():
+        # Look at ANY community college page to find To institutions; "DAC" was arbitrary
+        # "oia" = "Other Institution for Articulation"
+        # Skip the first <option>, which is an instructional placeholder value
+        name_labels = option_labels(find_select("oia", parent=document("DAC.html")))[1:]
+
+        name_substring = re.compile(r'\s*To:\xa0\s+(.+)\s*')
+
+        return [name_substring.match(label).group(1) for label in name_labels]
+
+
+    all_institutions = all_institutions_map()
+    to_names = to_institution_names()
+
+    to_institutions = {}
+    from_institutions = copy(all_institutions)
+
+    for name, code in all_institutions.items():
         if name in to_names:
-            to[name] = form_value
-            from_.pop(name, None)
+            to_institutions[name] = code
+            from_institutions.pop(name, None)
 
-    return to, from_
-
-
-def _all_institutions_map_():
-    # "ia" = "Institution for Articulation"
-    institution_select = find_select("ia", parent=document("welcome.html"))
-    names = option_labels(institution_select)
-
-    name_form_value_tuple = zip(names, institution_select.value_options)
-    # Skip the first <option>, which is an instructional placeholder value
-    next(name_form_value_tuple)
-
-    # Raw form values end in ".html", which we won't want
-    def strip_extension(raw_form_value):
-        return raw_form_value.rsplit('.', 1)[0]
-
-    return {
-        name.strip(): strip_extension(form_value)
-        for (name, form_value) in name_form_value_tuple
-    }
+    return to_institutions, from_institutions
 
 
-def _to_institution_names_():
-    # Look at ANY community college page to find To institutions; "DAC" was arbitrary
-    # "oia" = "Other Institution for Articulation"
-    # Skip the first <option>, which is an instructional placeholder value
-    names = option_labels(find_select("oia", parent=document("DAC.html")))[1:]
-
-    name_substring = re.compile('\s*To:\xa0\s+(.+)\s*')
-
-    return [name_substring.match(name).group(1) for name in names]
-
-
-def majors_map(from_institution_form_value, to_institution_form_value):
-    document = html.parse("http://www.assist.org/web-assist/articulationAgreement.do?inst1=none&inst2=none&ia={from_}&ay={year}&oia={to}&dir=1"
-                     .format(from_=from_institution_form_value,
-                             to=to_institution_form_value,
-                             year=current_articulation_year()
-                     )
+def fetch_major_codes_map(from_code, to_code):
+    root = html.parse(
+        "http://www.assist.org/web-assist/articulationAgreement.do?inst1=none&inst2=none&ia={from_}&ay={year}&oia={to}&dir=1"
+        .format(
+            from_=from_code, to=to_code,
+            year=current_articulation_year()
+        )
     )
 
-    major_form = find_by_name("form", "major", parent=document)
+    major_form = find_by_name("form", "major", parent=root)
 
     if major_form is None:
         return None
@@ -89,26 +97,25 @@ def majors_map(from_institution_form_value, to_institution_form_value):
     major_select = find_select("dora", parent=major_form)
     names = option_labels(major_select)
 
-    name_form_value_tuple = zip(names, major_select.value_options)
+    name_code_tuples = zip(names, major_select.value_options)
     # Skip the first two <option>s, the first being an instructional placeholder
     # value and the second being "All majors"
-    next(name_form_value_tuple)
-    next(name_form_value_tuple)
+    next(name_code_tuples)
+    next(name_code_tuples)
 
     return {
-        name: form_value
-        for (name, form_value) in name_form_value_tuple
+        name: code
+        for (name, code) in name_code_tuples
     }
 
 
-def articulation_url(from_institution_form_value, to_institution_form_value,
-                     major_form_value):
+def articulation_url(from_code, to_code, major_code):
     return (
         "http://web2.assist.org/cgi-bin/REPORT_2/Rep2.pl?aay={year}&dora={major}&oia={to}&ay={year}&event=19&ria={to}&agreement=aa&ia={from_}&sia={from_}&dir=1&&sidebar=false&rinst=left&mver=2&kind=5&dt=2"
         .format(
-            from_=from_institution_form_value,
-            to=to_institution_form_value,
-            major=quote(major_form_value),
+            from_=from_code,
+            to=to_code,
+            major=quote(major_code),
             year=current_articulation_year()
         )
     )
@@ -120,18 +127,18 @@ def articulation_text_from_html(raw_html):
     )
 
 
-def articulation_text_from_url(url):
+def fetch_articulation_text_from_url(url):
     return ''.join(
         html.parse(url).xpath('//pre/descendant-or-self::*/text()')
     )
 
 
-def articulation_text_from_form_values(from_institution, to_institution, major):
-    return articulation_text_from_url(articulation_url(from_institution,
-                                                       to_institution, major))
+def fetch_articulation_text_from_codes(from_code, to_code, major_code):
+    return fetch_articulation_text_from_url(articulation_url(from_code, to_code,
+                                                             major_code))
 
 
-def form_values_from_articulation_url(url):
+def codes_from_articulation_url(url):
     query = parse_qs(urlparse(url).query)
 
     # "ia" = "Institution for Articulation"

@@ -1,9 +1,11 @@
-import assistscraper
+from contextlib import redirect_stdout
 import json
 import os
-from contextlib import redirect_stdout
 
-text = assistscraper.articulation_text_from_form_values('DAC', 'SJSU', 'ENGRCOMPTR')
+import assistscraper
+
+
+text = assistscraper.fetch_articulation_text_from_codes('DAC', 'SJSU', 'ENGRCOMPTR')
 tree = assistscraper.course_tree(text)
 
 if not os.path.exists("sample"):
