@@ -9,15 +9,12 @@ from .lxml_helpers import document, find_by_name, find_select, option_labels
 
 
 __all__ = [
+    "articulation_html_from_page",
     "articulation_text_from_html",
     "articulation_url",
     "codes_from_articulation_url",
     "course_tree",
     "current_articulation_year",
-    "fetch_articulation_text_from_codes",
-    "fetch_articulation_text_from_url",
-    "fetch_major_codes_map_from_codes",
-    "fetch_major_codes_map_from_url",
     "major_codes_map_from_html",
     "majors_url",
     "to_and_from_institution_maps",
@@ -94,8 +91,9 @@ def majors_url(from_code, to_code):
     )
 
 
-def _major_codes_map_from_document_(lxml_document):
-    major_form = find_by_name("form", "major", parent=lxml_document)
+def major_codes_map_from_html(raw_html):
+    root = html.fromstring(raw_html)
+    major_form = find_by_name("form", "major", parent=root)
 
     if major_form is None:
         return None
@@ -115,18 +113,6 @@ def _major_codes_map_from_document_(lxml_document):
     }
 
 
-def major_codes_map_from_html(raw_html):
-    return _major_codes_map_from_document_(html.fromstring(raw_html))
-
-
-def fetch_major_codes_map_from_url(url):
-    return _major_codes_map_from_document_(html.parse(url))
-
-
-def fetch_major_codes_map_from_codes(from_code, to_code):
-    return fetch_major_codes_map_from_url(majors_url(from_code, to_code))
-
-
 def articulation_url(from_code, to_code, major_code):
     return (
         "http://web2.assist.org/cgi-bin/REPORT_2/Rep2.pl?aay={year}&dora={major}&oia={to}&ay={year}&event=19&ria={to}&agreement=aa&ia={from_}&sia={from_}&dir=1&&sidebar=false&rinst=left&mver=2&kind=5&dt=2"
@@ -139,21 +125,16 @@ def articulation_url(from_code, to_code, major_code):
     )
 
 
+def articulation_html_from_page(articulation_page):
+    return html.tostring(
+        html.fromstring(articulation_page).find('.//pre')
+    ).decode()
+
+
 def articulation_text_from_html(raw_html):
     return ''.join(
         html.fromstring(raw_html).xpath('//pre/descendant-or-self::*/text()')
     )
-
-
-def fetch_articulation_text_from_url(url):
-    return ''.join(
-        html.parse(url).xpath('//pre/descendant-or-self::*/text()')
-    )
-
-
-def fetch_articulation_text_from_codes(from_code, to_code, major_code):
-    return fetch_articulation_text_from_url(articulation_url(from_code, to_code,
-                                                             major_code))
 
 
 def codes_from_articulation_url(url):
