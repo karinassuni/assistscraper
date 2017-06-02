@@ -146,30 +146,36 @@ def _combine_tokens_(TO_tokens, FROM_tokens):
 
 
 def _tokenize_(raw_course_line_halves):
-    pattern = regex.compile(
-        r"""
-        (?(DEFINE)
-            (?<title_char>[\w,;:\"\'&+-/])
-            (?<title_words>(?&title_char)+(?:\ (?&title_char)+)*)
+    if _tokenize_.pattern is None:
+        _tokenize_.pattern = regex.compile(
+            r"""
+            (?(DEFINE)
+                (?<title_char>[\w,;:\"\'&+-\/]
+                             |(?!\(\d(?:\.\d)?\))[()])
+                (?<title_words>(?&title_char)+(?:\ (?&title_char)+)*)
+            )
+
+            ^
+            (?:(?<note>[*#@+%]+)\ *)?(?<code>[A-Z]+(?:\ [A-Z]+)*\ \d+[A-Z]*)
+            \ +
+            (?<FROM_and>&)?
+            \ +
+            (?<title>(?&title_words))
+            \ +
+            \((?<units>\d(?:\.\d)?)\)
+            $
+
+            |^(?<FROM_or>\ {0,4}OR)
+            |^(?<TO_or>\ {5,}OR)
+            |^(?<TO_and>\ +AND\ +)
+
+            |^(?<no_articulation>[Nn][Oo].+[Aa]rticulat)
+            |^(?<same_as>\ +Same\ as:)
+
+            |^\ +(?<title_contd>\ (?&title_words))
+            """,
+            regex.VERBOSE
         )
-
-        ^(?<code>[A-Z]+\ \d+[A-Z]*)
-        \ +
-        (?<and>&)?
-        \ +
-        (?<title>(?&title_words))
-        \ +
-        \((?<units>\d(?:\.\d)?)\)$
-
-        |^(?<FROM_or>\ {2,3}OR)
-        |^(?<TO_or>\ {4,}OR)
-
-        |^(?<no_articulation>[Nn][Oo].+[Aa]rticulat)
-
-        |^\ +(?<title_contd>\ (?&title_words))
-        """,
-        regex.VERBOSE
-    )
 
     def num(x):
         try:
@@ -180,18 +186,18 @@ def _tokenize_(raw_course_line_halves):
     tokens = []
     course = None
     processing_course = False
-    processing_and = False
+    processing_FROM_and = False
 
     for line in raw_course_line_halves:
-        match = pattern.match(line)
+        match = _tokenize_.pattern.match(line)
         if match is not None:
             if processing_course and not match.captures("title_contd"):
                 processing_course = False
                 tokens.append(course)
                 course = None
-                if processing_and:
+                if processing_FROM_and:
                     tokens.append({'operator': '&'})
-                    processing_and = False
+                    processing_FROM_and = False
 
             if match.captures("code"):
                 course = {
@@ -206,8 +212,8 @@ def _tokenize_(raw_course_line_halves):
                 tokens.append({'code': "No Course Articulated", 'title': "",
                                'units': 0})
 
-            if match.captures("and"):
-                processing_and = True
+            if match.captures("FROM_and"):
+                processing_FROM_and = True
 
             if match.captures("FROM_or"):
                 tokens.append({'operator': 'FROM_or'})
@@ -215,11 +221,21 @@ def _tokenize_(raw_course_line_halves):
             if match.captures("TO_or"):
                 tokens.append({'operator': 'TO_or'})
 
+            if match.captures("TO_and"):
+                tokens.append({'operator': 'AND'})
+
+            if match.captures("note"):
+                assert processing_course
+                course["note"] = match.captures("note")[0]
+
+            if match.captures("same_as"):
+                continue
+
         elif regex.match(r'^\s*$', line):
             continue
 
         else:
-            processing_and = False
+            processing_FROM_and = False
             if processing_course:
                 assert course is not None
                 tokens.append(course)
@@ -247,7 +263,7 @@ def _tokenize_(raw_course_line_halves):
 
 
     return add_explicit_ANDs(tokens)
-
+_tokenize_.pattern = None
 
 def _is_course_(obj):
     return isinstance(obj, dict) and "code" in obj
