@@ -1,46 +1,33 @@
 AND
-├── &
-│   ├── MATH 2A
-│   └── MATH 2B
-├── ENGR 10
-├── ENGR 37
 ├── FROM_or
-│   ├── ESL 6
-│   ├── EWRT 1B
-│   └── EWRT 1BH
+│   ├── MATH 100
+│   └── MATH 123
 ├── FROM_or
-│   ├── BIOL 10
-│   └── BIOL 10H
+│   ├── SOC 102
+│   ├── SOC 110
+│   └── SOC 120
 ├── FROM_or
-│   ├── MATH 1A
-│   └── MATH 1AH
+│   ├── MATH 100
+│   └── MATH 123
 ├── FROM_or
-│   ├── &
-│   │   ├── MATH 1BH
-│   │   └── MATH 1C
-│   ├── MATH 1B
-│   └── MATH 1CH
-├── FROM_or
-│   ├── &
-│   │   ├── MATH 1CH
-│   │   └── MATH 1D
-│   ├── MATH 1C
-│   └── MATH 1DH
-├── FROM_or
-│   ├── CIS 22A
-│   ├── CIS 27
-│   └── CIS 35A
-├── FROM_or
-│   ├── &
-│   │   ├── CIS 22BH
-│   │   └── CIS 22C
-│   ├── &
-│   │   ├── CIS 22C
-│   │   └── CIS 35A
-│   ├── CIS 22B
-│   └── CIS 22CH
-├── MATH 22
+│   ├── MATH 100
+│   └── MATH 123
 ├── No Course Articulated
-├── PHYS 4A
-└── PHYS 4B
+├── No Course Articulated
+├── No Course Articulated
+├── No Course Articulated
+├── No Course Articulated
+├── No Course Articulated
+├── No Course Articulated
+├── No Course Articulated
+├── No Course Articulated
+├── No Course Articulated
+├── No Course Articulated
+├── No Course Articulated
+├── SOC 101
+├── SOC 101
+├── SOC 101
+├── SOC 104
+├── SOC 104
+└── SOC 104
 

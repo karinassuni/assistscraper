@@ -2,422 +2,14 @@
     "AND": {
         "children": [
             {
-                "FROM_or": {
-                    "children": [
-                        {
-                            "EWRT 1B": {
-                                "data": {
-                                    "code": "EWRT 1B",
-                                    "title": "Reading, Writing and Research",
-                                    "units": 5
-                                }
-                            }
-                        },
-                        {
-                            "EWRT 1BH": {
-                                "data": {
-                                    "code": "EWRT 1BH",
-                                    "title": "Reading, Writing and Research - HONORS",
-                                    "units": 5
-                                }
-                            }
-                        },
-                        {
-                            "ESL 6": {
-                                "data": {
-                                    "code": "ESL 6",
-                                    "title": "Critical Reading and Research for Writing",
-                                    "units": 5
-                                }
-                            }
-                        }
-                    ],
+                "SOC 101": {
                     "data": {
+                        "code": "SOC 101",
+                        "title": "Introduction to Sociology",
+                        "units": 3,
                         "mapping": {
-                            "code": "ENGL 1B",
-                            "title": "Argument and Analysis",
-                            "units": 3
-                        }
-                    }
-                }
-            },
-            {
-                "FROM_or": {
-                    "children": [
-                        {
-                            "BIOL 10": {
-                                "data": {
-                                    "code": "BIOL 10",
-                                    "title": "Introductory Biology",
-                                    "units": 5
-                                }
-                            }
-                        },
-                        {
-                            "BIOL 10H": {
-                                "data": {
-                                    "code": "BIOL 10H",
-                                    "title": "Introductory Biology - HONORS",
-                                    "units": 5
-                                }
-                            }
-                        }
-                    ],
-                    "data": {
-                        "mapping": {
-                            "code": "BIOL 10",
-                            "title": "The Living World",
-                            "units": 3
-                        }
-                    }
-                }
-            },
-            {
-                "FROM_or": {
-                    "children": [
-                        {
-                            "MATH 1A": {
-                                "data": {
-                                    "code": "MATH 1A",
-                                    "title": "Calculus",
-                                    "units": 5
-                                }
-                            }
-                        },
-                        {
-                            "MATH 1AH": {
-                                "data": {
-                                    "code": "MATH 1AH",
-                                    "title": "Calculus - HONORS",
-                                    "units": 5
-                                }
-                            }
-                        }
-                    ],
-                    "data": {
-                        "mapping": {
-                            "code": "MATH 30",
-                            "title": "Calculus I",
-                            "units": 3
-                        }
-                    }
-                }
-            },
-            {
-                "FROM_or": {
-                    "children": [
-                        {
-                            "MATH 1B": {
-                                "data": {
-                                    "code": "MATH 1B",
-                                    "title": "Calculus",
-                                    "units": 5
-                                }
-                            }
-                        },
-                        {
-                            "&": {
-                                "children": [
-                                    {
-                                        "MATH 1BH": {
-                                            "data": {
-                                                "code": "MATH 1BH",
-                                                "title": "Calculus - HONORS",
-                                                "units": 5
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "MATH 1C": {
-                                            "data": {
-                                                "code": "MATH 1C",
-                                                "title": "Calculus",
-                                                "units": 5
-                                            }
-                                        }
-                                    }
-                                ],
-                                "data": {}
-                            }
-                        },
-                        {
-                            "MATH 1CH": {
-                                "data": {
-                                    "code": "MATH 1CH",
-                                    "title": "Calculus - HONORS",
-                                    "units": 5
-                                }
-                            }
-                        }
-                    ],
-                    "data": {
-                        "mapping": {
-                            "code": "MATH 31",
-                            "title": "Calculus II",
-                            "units": 4
-                        }
-                    }
-                }
-            },
-            {
-                "FROM_or": {
-                    "children": [
-                        {
-                            "MATH 1C": {
-                                "data": {
-                                    "code": "MATH 1C",
-                                    "title": "Calculus",
-                                    "units": 5
-                                }
-                            }
-                        },
-                        {
-                            "&": {
-                                "children": [
-                                    {
-                                        "MATH 1CH": {
-                                            "data": {
-                                                "code": "MATH 1CH",
-                                                "title": "Calculus - HONORS",
-                                                "units": 5
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "MATH 1D": {
-                                            "data": {
-                                                "code": "MATH 1D",
-                                                "title": "Calculus",
-                                                "units": 5
-                                            }
-                                        }
-                                    }
-                                ],
-                                "data": {}
-                            }
-                        },
-                        {
-                            "MATH 1DH": {
-                                "data": {
-                                    "code": "MATH 1DH",
-                                    "title": "Calculus - HONORS",
-                                    "units": 5
-                                }
-                            }
-                        }
-                    ],
-                    "data": {
-                        "mapping": {
-                            "code": "MATH 32",
-                            "title": "Calculus III",
-                            "units": 3
-                        }
-                    }
-                }
-            },
-            {
-                "MATH 22": {
-                    "data": {
-                        "code": "MATH 22",
-                        "title": "Discrete Mathematics",
-                        "units": 5,
-                        "mapping": {
-                            "code": "MATH 42",
-                            "title": "Discrete Mathematics",
-                            "units": 3
-                        }
-                    }
-                }
-            },
-            {
-                "&": {
-                    "children": [
-                        {
-                            "MATH 2A": {
-                                "data": {
-                                    "code": "MATH 2A",
-                                    "title": "Differential Equations",
-                                    "units": 5
-                                }
-                            }
-                        },
-                        {
-                            "MATH 2B": {
-                                "data": {
-                                    "code": "MATH 2B",
-                                    "title": "Linear Algebra",
-                                    "units": 5
-                                }
-                            }
-                        }
-                    ],
-                    "data": {
-                        "mapping": {
-                            "code": "MATH 123",
-                            "title": "Differential Equations and Linear Algebra",
-                            "units": 3
-                        }
-                    }
-                }
-            },
-            {
-                "PHYS 4A": {
-                    "data": {
-                        "code": "PHYS 4A",
-                        "title": "Physics for Scientists and Engineers: Mechanics",
-                        "units": 6,
-                        "mapping": {
-                            "code": "PHYS 50",
-                            "title": "General Physics/Mechanics",
-                            "units": 4
-                        }
-                    }
-                }
-            },
-            {
-                "PHYS 4B": {
-                    "data": {
-                        "code": "PHYS 4B",
-                        "title": "Physics for Scientists and Engineers: Electricity and Magnetism",
-                        "units": 6,
-                        "mapping": {
-                            "code": "PHYS 51",
-                            "title": "General Physics/Electricity and Magnetism",
-                            "units": 4
-                        }
-                    }
-                }
-            },
-            {
-                "FROM_or": {
-                    "children": [
-                        {
-                            "CIS 22A": {
-                                "data": {
-                                    "code": "CIS 22A",
-                                    "title": "Beginning Programming Methodologies in C++",
-                                    "units": 4.5
-                                }
-                            }
-                        },
-                        {
-                            "CIS 27": {
-                                "data": {
-                                    "code": "CIS 27",
-                                    "title": "Programming in C++ for C/Java Programmers",
-                                    "units": 4.5
-                                }
-                            }
-                        },
-                        {
-                            "CIS 35A": {
-                                "data": {
-                                    "code": "CIS 35A",
-                                    "title": "Java Programming",
-                                    "units": 4.5
-                                }
-                            }
-                        }
-                    ],
-                    "data": {
-                        "mapping": {
-                            "code": "CMPE 30",
-                            "title": "Programming Concepts and Methodology",
-                            "units": 3
-                        }
-                    }
-                }
-            },
-            {
-                "FROM_or": {
-                    "children": [
-                        {
-                            "CIS 22B": {
-                                "data": {
-                                    "code": "CIS 22B",
-                                    "title": "Intermediate Programming Methodologies in C++",
-                                    "units": 4.5
-                                }
-                            }
-                        },
-                        {
-                            "&": {
-                                "children": [
-                                    {
-                                        "CIS 22BH": {
-                                            "data": {
-                                                "code": "CIS 22BH",
-                                                "title": "Intermediate Programming Methodologies in C++ - HONORS",
-                                                "units": 4.5
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "CIS 22C": {
-                                            "data": {
-                                                "code": "CIS 22C",
-                                                "title": "Data Abstraction and Structures",
-                                                "units": 4.5
-                                            }
-                                        }
-                                    }
-                                ],
-                                "data": {}
-                            }
-                        },
-                        {
-                            "CIS 22CH": {
-                                "data": {
-                                    "code": "CIS 22CH",
-                                    "title": "Data Abstraction and Structures - HONORS",
-                                    "units": 4.5
-                                }
-                            }
-                        },
-                        {
-                            "&": {
-                                "children": [
-                                    {
-                                        "CIS 35A": {
-                                            "data": {
-                                                "code": "CIS 35A",
-                                                "title": "Java Programming",
-                                                "units": 4.5
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "CIS 22C": {
-                                            "data": {
-                                                "code": "CIS 22C",
-                                                "title": "Data Abstraction and Structures",
-                                                "units": 4.5
-                                            }
-                                        }
-                                    }
-                                ],
-                                "data": {}
-                            }
-                        }
-                    ],
-                    "data": {
-                        "mapping": {
-                            "code": "CMPE 50",
-                            "title": "Object-Oriented Concepts and Methodology",
-                            "units": 3
-                        }
-                    }
-                }
-            },
-            {
-                "ENGR 10": {
-                    "data": {
-                        "code": "ENGR 10",
-                        "title": "Introduction to Engineering",
-                        "units": 4.5,
-                        "mapping": {
-                            "code": "ENGR 10",
-                            "title": "Introduction to Engineering",
+                            "code": "SOC 1008",
+                            "title": "Introduction to Sociology",
                             "units": 3
                         }
                     }
@@ -430,22 +22,365 @@
                         "title": "",
                         "units": 0,
                         "mapping": {
-                            "code": "EE 97",
-                            "title": "Introductory Electrical Engineering Laboratory",
-                            "units": 1
+                            "code": "SOC 2018",
+                            "title": "Self and Society",
+                            "units": 3
                         }
                     }
                 }
             },
             {
-                "ENGR 37": {
+                "No Course Articulated": {
                     "data": {
-                        "code": "ENGR 37",
-                        "title": "Introduction to Circuit Analysis",
-                        "units": 5,
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0,
                         "mapping": {
-                            "code": "EE 98",
-                            "title": "Introduction to Circuit Analysis",
+                            "code": "SOC 2208",
+                            "title": "Introduction to Statistics in the Social Sciences",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "FROM_or": {
+                    "children": [
+                        {
+                            "MATH 100": {
+                                "data": {
+                                    "code": "MATH 100",
+                                    "title": "The Nature of Modern Mathematics",
+                                    "units": 3
+                                }
+                            }
+                        },
+                        {
+                            "MATH 123": {
+                                "data": {
+                                    "code": "MATH 123",
+                                    "title": "Elementary Statistics",
+                                    "units": 4
+                                }
+                            }
+                        }
+                    ],
+                    "data": {
+                        "mapping": {
+                            "code": "MATH 1209",
+                            "title": "Statistics in the Modern World",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "SOC 104": {
+                    "data": {
+                        "code": "SOC 104",
+                        "title": "Social Science Research Methods",
+                        "units": 3,
+                        "mapping": {
+                            "code": "SOC 2210",
+                            "title": "Intro to Research Methods",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "No Course Articulated": {
+                    "data": {
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0,
+                        "mapping": {
+                            "code": "SOC 2300",
+                            "title": "Race and Ethnic Relations",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "No Course Articulated": {
+                    "data": {
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0,
+                        "mapping": {
+                            "code": "SOC 2400",
+                            "title": "Sex and Gender Issues",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "FROM_or": {
+                    "children": [
+                        {
+                            "SOC 102": {
+                                "data": {
+                                    "code": "SOC 102",
+                                    "title": "Social Problems",
+                                    "units": 3
+                                }
+                            }
+                        },
+                        {
+                            "SOC 110": {
+                                "data": {
+                                    "code": "SOC 110",
+                                    "title": "Introduction to Marriage and Family",
+                                    "units": 3
+                                }
+                            }
+                        },
+                        {
+                            "SOC 120": {
+                                "data": {
+                                    "code": "SOC 120",
+                                    "title": "Race and Ethnic Relations",
+                                    "units": 3
+                                }
+                            }
+                        }
+                    ],
+                    "data": {
+                        "mapping": {
+                            "code": "Non-course",
+                            "title": "Select one (1) of the community college  courses to receive lower division Sociology major elective credit.  ",
+                            "units": 0
+                        }
+                    }
+                }
+            },
+            {
+                "SOC 101": {
+                    "data": {
+                        "code": "SOC 101",
+                        "title": "Introduction to Sociology",
+                        "units": 3,
+                        "mapping": {
+                            "code": "SOC 1008",
+                            "title": "Introduction to Sociology",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "No Course Articulated": {
+                    "data": {
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0,
+                        "mapping": {
+                            "code": "SOC 2018",
+                            "title": "Self and Society",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "No Course Articulated": {
+                    "data": {
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0,
+                        "mapping": {
+                            "code": "SOC 2208",
+                            "title": "Introduction to Statistics in the Social Sciences",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "FROM_or": {
+                    "children": [
+                        {
+                            "MATH 100": {
+                                "data": {
+                                    "code": "MATH 100",
+                                    "title": "The Nature of Modern Mathematics",
+                                    "units": 3
+                                }
+                            }
+                        },
+                        {
+                            "MATH 123": {
+                                "data": {
+                                    "code": "MATH 123",
+                                    "title": "Elementary Statistics",
+                                    "units": 4
+                                }
+                            }
+                        }
+                    ],
+                    "data": {
+                        "mapping": {
+                            "code": "MATH 1209",
+                            "title": "Statistics in the Modern World",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "SOC 104": {
+                    "data": {
+                        "code": "SOC 104",
+                        "title": "Social Science Research Methods",
+                        "units": 3,
+                        "mapping": {
+                            "code": "SOC 2210",
+                            "title": "Intro to Research Methods",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "No Course Articulated": {
+                    "data": {
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0,
+                        "mapping": {
+                            "code": "SOC 2300",
+                            "title": "Race and Ethnic Relations",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "No Course Articulated": {
+                    "data": {
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0,
+                        "mapping": {
+                            "code": "SOC 2400",
+                            "title": "Sex and Gender Issues",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "SOC 101": {
+                    "data": {
+                        "code": "SOC 101",
+                        "title": "Introduction to Sociology",
+                        "units": 3,
+                        "mapping": {
+                            "code": "SOC 1008",
+                            "title": "Introduction to Sociology",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "No Course Articulated": {
+                    "data": {
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0,
+                        "mapping": {
+                            "code": "SOC 2018",
+                            "title": "Self and Society",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "No Course Articulated": {
+                    "data": {
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0,
+                        "mapping": {
+                            "code": "SOC 2208",
+                            "title": "Introduction to Statistics in the Social Sciences",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "FROM_or": {
+                    "children": [
+                        {
+                            "MATH 100": {
+                                "data": {
+                                    "code": "MATH 100",
+                                    "title": "The Nature of Modern Mathematics",
+                                    "units": 3
+                                }
+                            }
+                        },
+                        {
+                            "MATH 123": {
+                                "data": {
+                                    "code": "MATH 123",
+                                    "title": "Elementary Statistics",
+                                    "units": 4
+                                }
+                            }
+                        }
+                    ],
+                    "data": {
+                        "mapping": {
+                            "code": "MATH 1209",
+                            "title": "Statistics in the Modern World",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "SOC 104": {
+                    "data": {
+                        "code": "SOC 104",
+                        "title": "Social Science Research Methods",
+                        "units": 3,
+                        "mapping": {
+                            "code": "SOC 2210",
+                            "title": "Intro to Research Methods",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "No Course Articulated": {
+                    "data": {
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0,
+                        "mapping": {
+                            "code": "SOC 2300",
+                            "title": "Race and Ethnic Relations",
+                            "units": 3
+                        }
+                    }
+                }
+            },
+            {
+                "No Course Articulated": {
+                    "data": {
+                        "code": "No Course Articulated",
+                        "title": "",
+                        "units": 0,
+                        "mapping": {
+                            "code": "SOC 2400",
+                            "title": "Sex and Gender Issues",
                             "units": 3
                         }
                     }

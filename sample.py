@@ -6,7 +6,7 @@ import urllib.request
 import assistscraper
 
 
-url = assistscraper.articulation_url('DAC', 'SJSU', 'ENGRCOMPTR')
+url = assistscraper.articulation_url('AHC', 'CSUB', 'SOC')
 with urllib.request.urlopen(url) as response:
    articulation_page = response.read()
 inner_html = assistscraper.articulation_html_from_page(articulation_page)
