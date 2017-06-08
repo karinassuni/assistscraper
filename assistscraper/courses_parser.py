@@ -74,21 +74,9 @@ def _treeify_(tokens):
     def add_course(course):
         nonlocal latest_course_id
 
-        # Handle redundant course
-        try:
-            original = [sibling
-                        for sibling in tree.children(active_operator_id())
-                        if _is_course_(sibling.data)
-                        and sibling.data['code'] == course['code']
-                       ][0]
-        except IndexError:
-            course_node = Node(tag=course['code'], data=course)
-            tree.add_node(course_node, parent=active_operator_id())
-            latest_course_id = course_node.identifier
-        else:
-            if 'mapping' in course:
-                original.data['mapping'] = course['mapping']
-                latest_course_id = original.identifier
+        course_node = Node(tag=course['code'], data=course)
+        tree.add_node(course_node, parent=active_operator_id())
+        latest_course_id = course_node.identifier
 
 
     def transfer_mapping(source, target):
