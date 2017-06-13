@@ -79,6 +79,10 @@ def _treeify_(tokens):
         latest_course_id = course_node.identifier
 
 
+    def all_children_have_mappings(nid):
+        return all('mapping' in node.data for node in tree.children(nid))
+
+
     def transfer_mapping(source, target):
         mapping = source['mapping']
         source.pop('mapping', None)
@@ -90,11 +94,13 @@ def _treeify_(tokens):
             precedence = precedence_level(token['operator'])
 
             if precedence == 1:
-                former_operator = tree.get_node(active_operator_id()).data
+                former_operator_id = active_operator_id()
                 if pop_back_to_operator(token):
-                    if active_operator_id() == "root":
+                    if active_operator_id() == "root" \
+                    and not all_children_have_mappings(former_operator_id):
+                        former_operator = tree.get_node(former_operator_id).data
                         latest_course = tree.get_node(latest_course_id).data
-                        assert 'mapping' in latest_course
+                        # assert 'mapping' in latest_course
                         transfer_mapping(latest_course, former_operator)
                 else:
                     put_node_into_operator_subtree(active_operator_id(), token)
@@ -117,12 +123,35 @@ def _combine_tokens_(TO_tokens, FROM_tokens):
     TO_courses = [token for token in TO_tokens if _is_course_(token)]
     last_course_index = -1
 
+
+    def inherit_operators_from_TO_side():
+        TO_side_operator_tokens = [token for token in TO_tokens
+                              if _is_operator_(token)]
+        FROM_side_TO_operator_tokens = [token for token in FROM_tokens
+                                if _is_TO_operator_(token)]
+
+        assert len(TO_side_operator_tokens) == len(FROM_side_TO_operator_tokens)
+
+        for TO_operator_token, FROM_operator_token \
+        in zip(TO_side_operator_tokens, FROM_side_TO_operator_tokens):
+
+            if TO_operator_token != FROM_operator_token:
+                if TO_operator_token['operator'] == "FROM_or":
+                    FROM_operator_token['operator'] = "TO_or"
+                elif TO_operator_token['operator'] == "&":
+                    FROM_operator_token['operator'] = "AND"
+                else:
+                    FROM_operator_token['operator'] = TO_operator_token['operator'] 
+
+
     def make_mapping():
         combined_tokens[last_course_index] = (
             deepcopy(FROM_tokens[last_course_index])
         )
         combined_tokens[last_course_index]['mapping'] = TO_courses.pop(0)
 
+
+    inherit_operators_from_TO_side()
     for i, token in enumerate(FROM_tokens):
         if _is_operator_(token) and token['operator'] in TO_OPERATORS:
             make_mapping()
@@ -271,3 +300,13 @@ def _is_course_(obj):
 
 def _is_operator_(obj):
     return isinstance(obj, dict) and "operator" in obj
+
+
+def _is_TO_operator_(token):
+    TO_OPERATORS = ("AND", "TO_or")
+    return _is_operator_(token) and token['operator'] in TO_OPERATORS
+
+
+def _is_FROM_operator_(token):
+    FROM_OPERATORS = ("&", "FROM_or")
+    return _is_operator_(token) and token['operator'] in FROM_OPERATORS

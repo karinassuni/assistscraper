@@ -1,26 +1,8 @@
 AND
 ├── FROM_or
-│   ├── MATH 100
-│   └── MATH 123
-├── FROM_or
 │   ├── SOC 102
 │   ├── SOC 110
 │   └── SOC 120
-├── FROM_or
-│   ├── MATH 100
-│   └── MATH 123
-├── FROM_or
-│   ├── MATH 100
-│   └── MATH 123
-├── No Course Articulated
-├── No Course Articulated
-├── No Course Articulated
-├── No Course Articulated
-├── No Course Articulated
-├── No Course Articulated
-├── No Course Articulated
-├── No Course Articulated
-├── No Course Articulated
 ├── No Course Articulated
 ├── No Course Articulated
 ├── No Course Articulated
@@ -29,5 +11,29 @@ AND
 ├── SOC 101
 ├── SOC 104
 ├── SOC 104
-└── SOC 104
+├── SOC 104
+├── TO_or
+│   ├── FROM_or
+│   │   ├── MATH 100
+│   │   └── MATH 123
+│   └── No Course Articulated
+├── TO_or
+│   ├── No Course Articulated
+│   └── No Course Articulated
+├── TO_or
+│   ├── FROM_or
+│   │   ├── MATH 100
+│   │   └── MATH 123
+│   └── No Course Articulated
+├── TO_or
+│   ├── No Course Articulated
+│   └── No Course Articulated
+├── TO_or
+│   ├── FROM_or
+│   │   ├── MATH 100
+│   │   └── MATH 123
+│   └── No Course Articulated
+└── TO_or
+    ├── No Course Articulated
+    └── No Course Articulated
 

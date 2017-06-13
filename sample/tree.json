@@ -30,48 +30,55 @@
                 }
             },
             {
-                "No Course Articulated": {
-                    "data": {
-                        "code": "No Course Articulated",
-                        "title": "",
-                        "units": 0,
-                        "mapping": {
-                            "code": "SOC 2208",
-                            "title": "Introduction to Statistics in the Social Sciences",
-                            "units": 3
-                        }
-                    }
-                }
-            },
-            {
-                "FROM_or": {
+                "TO_or": {
                     "children": [
                         {
-                            "MATH 100": {
+                            "No Course Articulated": {
                                 "data": {
-                                    "code": "MATH 100",
-                                    "title": "The Nature of Modern Mathematics",
-                                    "units": 3
+                                    "code": "No Course Articulated",
+                                    "title": "",
+                                    "units": 0,
+                                    "mapping": {
+                                        "code": "SOC 2208",
+                                        "title": "Introduction to Statistics in the Social Sciences",
+                                        "units": 3
+                                    }
                                 }
                             }
                         },
                         {
-                            "MATH 123": {
+                            "FROM_or": {
+                                "children": [
+                                    {
+                                        "MATH 100": {
+                                            "data": {
+                                                "code": "MATH 100",
+                                                "title": "The Nature of Modern Mathematics",
+                                                "units": 3
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "MATH 123": {
+                                            "data": {
+                                                "code": "MATH 123",
+                                                "title": "Elementary Statistics",
+                                                "units": 4
+                                            }
+                                        }
+                                    }
+                                ],
                                 "data": {
-                                    "code": "MATH 123",
-                                    "title": "Elementary Statistics",
-                                    "units": 4
+                                    "mapping": {
+                                        "code": "MATH 1209",
+                                        "title": "Statistics in the Modern World",
+                                        "units": 3
+                                    }
                                 }
                             }
                         }
                     ],
-                    "data": {
-                        "mapping": {
-                            "code": "MATH 1209",
-                            "title": "Statistics in the Modern World",
-                            "units": 3
-                        }
-                    }
+                    "data": {}
                 }
             },
             {
@@ -89,31 +96,38 @@
                 }
             },
             {
-                "No Course Articulated": {
-                    "data": {
-                        "code": "No Course Articulated",
-                        "title": "",
-                        "units": 0,
-                        "mapping": {
-                            "code": "SOC 2300",
-                            "title": "Race and Ethnic Relations",
-                            "units": 3
+                "TO_or": {
+                    "children": [
+                        {
+                            "No Course Articulated": {
+                                "data": {
+                                    "code": "No Course Articulated",
+                                    "title": "",
+                                    "units": 0,
+                                    "mapping": {
+                                        "code": "SOC 2300",
+                                        "title": "Race and Ethnic Relations",
+                                        "units": 3
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "No Course Articulated": {
+                                "data": {
+                                    "code": "No Course Articulated",
+                                    "title": "",
+                                    "units": 0,
+                                    "mapping": {
+                                        "code": "SOC 2400",
+                                        "title": "Sex and Gender Issues",
+                                        "units": 3
+                                    }
+                                }
+                            }
                         }
-                    }
-                }
-            },
-            {
-                "No Course Articulated": {
-                    "data": {
-                        "code": "No Course Articulated",
-                        "title": "",
-                        "units": 0,
-                        "mapping": {
-                            "code": "SOC 2400",
-                            "title": "Sex and Gender Issues",
-                            "units": 3
-                        }
-                    }
+                    ],
+                    "data": {}
                 }
             },
             {
@@ -185,48 +199,55 @@
                 }
             },
             {
-                "No Course Articulated": {
-                    "data": {
-                        "code": "No Course Articulated",
-                        "title": "",
-                        "units": 0,
-                        "mapping": {
-                            "code": "SOC 2208",
-                            "title": "Introduction to Statistics in the Social Sciences",
-                            "units": 3
-                        }
-                    }
-                }
-            },
-            {
-                "FROM_or": {
+                "TO_or": {
                     "children": [
                         {
-                            "MATH 100": {
+                            "No Course Articulated": {
                                 "data": {
-                                    "code": "MATH 100",
-                                    "title": "The Nature of Modern Mathematics",
-                                    "units": 3
+                                    "code": "No Course Articulated",
+                                    "title": "",
+                                    "units": 0,
+                                    "mapping": {
+                                        "code": "SOC 2208",
+                                        "title": "Introduction to Statistics in the Social Sciences",
+                                        "units": 3
+                                    }
                                 }
                             }
                         },
                         {
-                            "MATH 123": {
+                            "FROM_or": {
+                                "children": [
+                                    {
+                                        "MATH 100": {
+                                            "data": {
+                                                "code": "MATH 100",
+                                                "title": "The Nature of Modern Mathematics",
+                                                "units": 3
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "MATH 123": {
+                                            "data": {
+                                                "code": "MATH 123",
+                                                "title": "Elementary Statistics",
+                                                "units": 4
+                                            }
+                                        }
+                                    }
+                                ],
                                 "data": {
-                                    "code": "MATH 123",
-                                    "title": "Elementary Statistics",
-                                    "units": 4
+                                    "mapping": {
+                                        "code": "MATH 1209",
+                                        "title": "Statistics in the Modern World",
+                                        "units": 3
+                                    }
                                 }
                             }
                         }
                     ],
-                    "data": {
-                        "mapping": {
-                            "code": "MATH 1209",
-                            "title": "Statistics in the Modern World",
-                            "units": 3
-                        }
-                    }
+                    "data": {}
                 }
             },
             {
@@ -244,31 +265,38 @@
                 }
             },
             {
-                "No Course Articulated": {
-                    "data": {
-                        "code": "No Course Articulated",
-                        "title": "",
-                        "units": 0,
-                        "mapping": {
-                            "code": "SOC 2300",
-                            "title": "Race and Ethnic Relations",
-                            "units": 3
+                "TO_or": {
+                    "children": [
+                        {
+                            "No Course Articulated": {
+                                "data": {
+                                    "code": "No Course Articulated",
+                                    "title": "",
+                                    "units": 0,
+                                    "mapping": {
+                                        "code": "SOC 2300",
+                                        "title": "Race and Ethnic Relations",
+                                        "units": 3
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "No Course Articulated": {
+                                "data": {
+                                    "code": "No Course Articulated",
+                                    "title": "",
+                                    "units": 0,
+                                    "mapping": {
+                                        "code": "SOC 2400",
+                                        "title": "Sex and Gender Issues",
+                                        "units": 3
+                                    }
+                                }
+                            }
                         }
-                    }
-                }
-            },
-            {
-                "No Course Articulated": {
-                    "data": {
-                        "code": "No Course Articulated",
-                        "title": "",
-                        "units": 0,
-                        "mapping": {
-                            "code": "SOC 2400",
-                            "title": "Sex and Gender Issues",
-                            "units": 3
-                        }
-                    }
+                    ],
+                    "data": {}
                 }
             },
             {
@@ -300,48 +328,55 @@
                 }
             },
             {
-                "No Course Articulated": {
-                    "data": {
-                        "code": "No Course Articulated",
-                        "title": "",
-                        "units": 0,
-                        "mapping": {
-                            "code": "SOC 2208",
-                            "title": "Introduction to Statistics in the Social Sciences",
-                            "units": 3
-                        }
-                    }
-                }
-            },
-            {
-                "FROM_or": {
+                "TO_or": {
                     "children": [
                         {
-                            "MATH 100": {
+                            "No Course Articulated": {
                                 "data": {
-                                    "code": "MATH 100",
-                                    "title": "The Nature of Modern Mathematics",
-                                    "units": 3
+                                    "code": "No Course Articulated",
+                                    "title": "",
+                                    "units": 0,
+                                    "mapping": {
+                                        "code": "SOC 2208",
+                                        "title": "Introduction to Statistics in the Social Sciences",
+                                        "units": 3
+                                    }
                                 }
                             }
                         },
                         {
-                            "MATH 123": {
+                            "FROM_or": {
+                                "children": [
+                                    {
+                                        "MATH 100": {
+                                            "data": {
+                                                "code": "MATH 100",
+                                                "title": "The Nature of Modern Mathematics",
+                                                "units": 3
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "MATH 123": {
+                                            "data": {
+                                                "code": "MATH 123",
+                                                "title": "Elementary Statistics",
+                                                "units": 4
+                                            }
+                                        }
+                                    }
+                                ],
                                 "data": {
-                                    "code": "MATH 123",
-                                    "title": "Elementary Statistics",
-                                    "units": 4
+                                    "mapping": {
+                                        "code": "MATH 1209",
+                                        "title": "Statistics in the Modern World",
+                                        "units": 3
+                                    }
                                 }
                             }
                         }
                     ],
-                    "data": {
-                        "mapping": {
-                            "code": "MATH 1209",
-                            "title": "Statistics in the Modern World",
-                            "units": 3
-                        }
-                    }
+                    "data": {}
                 }
             },
             {
@@ -359,31 +394,38 @@
                 }
             },
             {
-                "No Course Articulated": {
-                    "data": {
-                        "code": "No Course Articulated",
-                        "title": "",
-                        "units": 0,
-                        "mapping": {
-                            "code": "SOC 2300",
-                            "title": "Race and Ethnic Relations",
-                            "units": 3
+                "TO_or": {
+                    "children": [
+                        {
+                            "No Course Articulated": {
+                                "data": {
+                                    "code": "No Course Articulated",
+                                    "title": "",
+                                    "units": 0,
+                                    "mapping": {
+                                        "code": "SOC 2300",
+                                        "title": "Race and Ethnic Relations",
+                                        "units": 3
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "No Course Articulated": {
+                                "data": {
+                                    "code": "No Course Articulated",
+                                    "title": "",
+                                    "units": 0,
+                                    "mapping": {
+                                        "code": "SOC 2400",
+                                        "title": "Sex and Gender Issues",
+                                        "units": 3
+                                    }
+                                }
+                            }
                         }
-                    }
-                }
-            },
-            {
-                "No Course Articulated": {
-                    "data": {
-                        "code": "No Course Articulated",
-                        "title": "",
-                        "units": 0,
-                        "mapping": {
-                            "code": "SOC 2400",
-                            "title": "Sex and Gender Issues",
-                            "units": 3
-                        }
-                    }
+                    ],
+                    "data": {}
                 }
             }
         ],
