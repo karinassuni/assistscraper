@@ -4,10 +4,40 @@ import regex
 from treelib import Tree, Node
 
 
-def parse(raw_course_lines):
+__all__ = [
+    "articulation_tree",
+    "tokenize_section",
+    "treeify_section",
+]
+
+
+def tokenize_section(course_section):
+    TO_lines, FROM_lines = _split_lines_(course_section)
+    return _tokenize_(TO_lines), _tokenize_(FROM_lines)
+
+
+def treeify_section(course_section):
+    TO_lines, FROM_lines = _split_lines_(course_section)
+    return _treeify_(_combine_tokens_(
+        _tokenize_(TO_lines),
+        _tokenize_(FROM_lines)
+    ))
+
+
+def articulation_tree(entire_articulation_text):
+
+    def is_course_line(line):
+        return '|' in line
+
+    raw_course_lines = [line for line in entire_articulation_text.splitlines()
+                        if is_course_line(line)]
+
     TO_lines, FROM_lines = _split_lines_(raw_course_lines)
-    return _treeify_(_combine_tokens_(_tokenize_(TO_lines),
-                                      _tokenize_(FROM_lines)))
+
+    return _treeify_(_combine_tokens_(
+        _add_explicit_ANDs_(_tokenize_(TO_lines)),
+        _add_explicit_ANDs_(_tokenize_(FROM_lines))
+    ))
 
 
 def _split_lines_(raw_course_lines):
@@ -273,26 +303,28 @@ def _tokenize_(raw_course_line_halves):
     if course:
         tokens.append(course)
 
-    def add_explicit_ANDs(tokens):
-        tokens_with_and = []
+    return tokens
 
-        # Consecutive courses = implicit AND; make an explicit token!
-        for i, current in enumerate(tokens):
-            tokens_with_and.append(current)
-            try:
-                next_ = tokens[i + 1]
-            except IndexError:
-                break
-            else:
-                if next_ != "FROM_or" and next_ != "&" and next_ != "TO_or" \
-                and _is_course_(next_) and _is_course_(current):
-                    tokens_with_and.append({'operator': 'AND'})
-
-        return tokens_with_and
-
-
-    return add_explicit_ANDs(tokens)
 _tokenize_.pattern = None
+
+
+def _add_explicit_ANDs_(tokens):
+    tokens_with_and = []
+
+    # Consecutive courses = implicit AND; make an explicit token!
+    for i, current in enumerate(tokens):
+        tokens_with_and.append(current)
+        try:
+            next_ = tokens[i + 1]
+        except IndexError:
+            break
+        else:
+            if next_ != "FROM_or" and next_ != "&" and next_ != "TO_or" \
+            and _is_course_(next_) and _is_course_(current):
+                tokens_with_and.append({'operator': 'AND'})
+
+    return tokens_with_and
+
 
 def _is_course_(obj):
     return isinstance(obj, dict) and "code" in obj

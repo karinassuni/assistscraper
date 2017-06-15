@@ -4,6 +4,7 @@ import os
 import urllib.request
 
 import assistscraper
+from assistscraper.courses_parser import articulation_tree
 
 
 url = assistscraper.articulation_url('AHC', 'CSUB', 'SOC')
@@ -11,7 +12,7 @@ with urllib.request.urlopen(url) as response:
    articulation_page = response.read()
 inner_html = assistscraper.articulation_html_from_page(articulation_page)
 text = assistscraper.articulation_text_from_html(inner_html)
-tree = assistscraper.course_tree(text)
+tree = articulation_tree(text)
 
 if not os.path.exists("sample"):
     os.makedirs("sample")

@@ -13,7 +13,6 @@ __all__ = [
     "articulation_text_from_html",
     "articulation_url",
     "codes_from_articulation_url",
-    "course_tree",
     "current_articulation_year",
     "major_codes_map_from_html",
     "majors_url",
@@ -147,10 +146,3 @@ def codes_from_articulation_url(url):
     major = query['dora'][0]
 
     return from_institution, to_institution, major
-
-
-def course_tree(articulation_text):
-    # Only course lines have '|', as a separator between FROM and TO courses
-    raw_course_lines = [line for line in articulation_text.splitlines() if '|' in line]
-
-    return courses_parser.parse(raw_course_lines)
