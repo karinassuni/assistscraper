@@ -13,7 +13,13 @@ __all__ = [
 
 def tokenize_section(course_section):
     TO_lines, FROM_lines = _split_lines_(course_section)
-    return _tokenize_(TO_lines), _tokenize_(FROM_lines)
+    blank_token = {'blank': None}
+    return (
+        _add_token_between_consecutive_courses_(blank_token,
+                                                _tokenize_(TO_lines)),
+        _add_token_between_consecutive_courses_(blank_token,
+                                                _tokenize_(FROM_lines))
+    )
 
 
 def treeify_section(course_section):
@@ -33,10 +39,11 @@ def articulation_tree(entire_articulation_text):
                         if is_course_line(line)]
 
     TO_lines, FROM_lines = _split_lines_(raw_course_lines)
+    AND_token = {'operator': 'AND'}
 
     return _treeify_(_combine_tokens_(
-        _add_explicit_ANDs_(_tokenize_(TO_lines)),
-        _add_explicit_ANDs_(_tokenize_(FROM_lines))
+        _add_token_between_consecutive_courses_(AND_token, _tokenize_(TO_lines)),
+        _add_token_between_consecutive_courses_(AND_token, _tokenize_(FROM_lines))
     ))
 
 
@@ -308,22 +315,20 @@ def _tokenize_(raw_course_line_halves):
 _tokenize_.pattern = None
 
 
-def _add_explicit_ANDs_(tokens):
-    tokens_with_and = []
+def _add_token_between_consecutive_courses_(filler_token, tokens):
+    tokens_with_filler = []
 
-    # Consecutive courses = implicit AND; make an explicit token!
-    for i, current in enumerate(tokens):
-        tokens_with_and.append(current)
+    for i, current_token in enumerate(tokens):
+        tokens_with_filler.append(current_token)
         try:
-            next_ = tokens[i + 1]
+            next_token = tokens[i + 1]
         except IndexError:
             break
         else:
-            if next_ != "FROM_or" and next_ != "&" and next_ != "TO_or" \
-            and _is_course_(next_) and _is_course_(current):
-                tokens_with_and.append({'operator': 'AND'})
+            if _is_course_(current_token) and _is_course_(next_token):
+                tokens_with_filler.append(filler_token)
 
-    return tokens_with_and
+    return tokens_with_filler
 
 
 def _is_course_(obj):
