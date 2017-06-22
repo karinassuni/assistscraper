@@ -297,7 +297,7 @@ def _tokenize_(raw_course_line_halves):
 
         else:
             if processing_non_course:
-                course['non-course'] += line.strip() + '\n'
+                course['non-course'] += line.strip() + ' '
             else:
                 if processing_course:
                     assert course is not None
@@ -305,7 +305,7 @@ def _tokenize_(raw_course_line_halves):
                     processing_course = False
                 processing_FROM_and = False
                 processing_non_course = True
-                course = {'non-course': line.strip() + '\n'}
+                course = {'non-course': line.strip() + ' '}
 
     if course:
         tokens.append(course)
