@@ -250,16 +250,16 @@ def _tokenize_(raw_course_line_halves):
     course = None
     processing_course = False
     processing_FROM_and = False
-    processing_non_course = False
+    processing_info_token = False
 
     for line in raw_course_line_halves:
         match = _tokenize_.pattern.match(line)
         if match is not None:
-            if processing_non_course:
-                course = {'non-course': course['non-course'].strip()}
+            if processing_info_token:
+                course = {'info': course['info'].strip()}
                 tokens.append(course)
                 course = None
-                processing_non_course = False
+                processing_info_token = False
 
             if processing_course and not match.captures("title_contd"):
                 processing_course = False
@@ -305,16 +305,16 @@ def _tokenize_(raw_course_line_halves):
             continue
 
         else:
-            if processing_non_course:
-                course['non-course'] += line.strip() + ' '
+            if processing_info_token:
+                course['info'] += line.strip() + ' '
             else:
                 if processing_course:
                     assert course is not None
                     tokens.append(course)
                     processing_course = False
                 processing_FROM_and = False
-                processing_non_course = True
-                course = {'non-course': line.strip() + ' '}
+                processing_info_token = True
+                course = {'info': line.strip() + ' '}
 
     if course:
         tokens.append(course)
