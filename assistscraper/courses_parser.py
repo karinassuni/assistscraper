@@ -239,6 +239,7 @@ def _tokenize_(raw_course_line_halves):
             """,
             regex.VERBOSE
         )
+        _tokenize_.special_info_pattern = regex.compile(r'\([A-Z\d]')
 
     def num(x):
         try:
@@ -306,7 +307,12 @@ def _tokenize_(raw_course_line_halves):
 
         else:
             if processing_info_token:
-                course['info'] += line.strip() + ' '
+                if _tokenize_.special_info_pattern.match(line):
+                    course = {'info': course['info'].strip()}
+                    tokens.append(course)
+                    course = {'info': line.strip() + ' '}
+                else:
+                    course['info'] += line.strip() + ' '
             else:
                 if processing_course:
                     assert course is not None
@@ -322,6 +328,7 @@ def _tokenize_(raw_course_line_halves):
     return tokens
 
 _tokenize_.pattern = None
+_tokenize_.special_info_pattern = None
 
 
 def _add_token_between_consecutive_courses_(filler_token, tokens):
