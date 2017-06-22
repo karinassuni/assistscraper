@@ -232,7 +232,9 @@ def _tokenize_(raw_course_line_halves):
             |^(?<TO_and>\ +AND\ +)
 
 
-            |^(?<no_articulation>[Nn][Oo].+[Aa]rticulat)
+            |^(?<no_articulation>N[Oo][Tt]?\ )
+              (?:[A-Za-z ]+[^A-Za-z \n]\ ?(?<two_line_no_articulation>[A-Z]))?
+
             |^(?<same_as>\ +Same\ as:)
 
             |^\ +(?<title_contd>\ (?&title_words))
@@ -252,8 +254,15 @@ def _tokenize_(raw_course_line_halves):
     processing_course = False
     processing_FROM_and = False
     processing_info_token = False
+    processing_two_line_no_articulation = False
 
     for line in raw_course_line_halves:
+        if processing_two_line_no_articulation:
+            course['details'] += line.rstrip()
+            tokens.append(course)
+            processing_two_line_no_articulation = False
+            continue
+
         match = _tokenize_.pattern.match(line)
         if match is not None:
             if processing_info_token:
@@ -280,8 +289,14 @@ def _tokenize_(raw_course_line_halves):
                 processing_course = True
             elif match.captures("title_contd"):
                 course["title"] += match.captures("title_contd")[0]
+
             elif match.captures("no_articulation"):
-                tokens.append({'no-articulation': None})
+                if match.captures("two_line_no_articulation"):
+                    details = line[match.start('two_line_no_articulation'):]
+                    course = {'no-articulation': None, 'details': details}
+                    processing_two_line_no_articulation = True
+                else:
+                    tokens.append({'no-articulation': None})
 
             if match.captures("FROM_and"):
                 processing_FROM_and = True
