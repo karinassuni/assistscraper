@@ -16,19 +16,17 @@ def tokenize_section(course_section):
     blank_token = {'blank': None}
     return (
         _add_token_between_consecutive_courses_(blank_token,
-                                                _tokenize_(TO_lines,
-                                                           are_TO_lines=True)),
+                                                _tokenize_(TO_lines)),
         _add_token_between_consecutive_courses_(blank_token,
-                                                _tokenize_(FROM_lines,
-                                                           are_TO_lines=False))
+                                                _tokenize_(FROM_lines))
     )
 
 
 def treeify_section(course_section):
     TO_lines, FROM_lines = _split_lines_(course_section)
     return _treeify_(_combine_tokens_(
-        _tokenize_(TO_lines, are_TO_lines=True),
-        _tokenize_(FROM_lines, are_TO_lines=False)
+        _tokenize_(TO_lines),
+        _tokenize_(FROM_lines)
     ))
 
 
@@ -44,11 +42,8 @@ def articulation_tree(entire_articulation_text):
     AND_token = {'operator': 'AND'}
 
     return _treeify_(_combine_tokens_(
-        _add_token_between_consecutive_courses_(AND_token, _tokenize_(TO_lines,
-                                                                      are_TO_lines=True)),
-        _add_token_between_consecutive_courses_(AND_token,
-                                                _tokenize_(FROM_lines,
-                                                           are_TO_lines=False))
+        _add_token_between_consecutive_courses_(AND_token, _tokenize_(TO_lines)),
+        _add_token_between_consecutive_courses_(AND_token, _tokenize_(FROM_lines))
     ))
 
 
@@ -204,7 +199,7 @@ def _combine_tokens_(TO_tokens, FROM_tokens):
     return combined_tokens
 
 
-def _tokenize_(raw_course_line_halves, *, are_TO_lines):
+def _tokenize_(raw_course_line_halves):
     if _tokenize_.pattern is None:
         _tokenize_.pattern = regex.compile(
             r"""
@@ -243,29 +238,13 @@ def _tokenize_(raw_course_line_halves, *, are_TO_lines):
         except ValueError:
             return float(x)
 
-
-    def word_was_wrapped(*, previous_line, current_line, are_TO_lines):
-        if are_TO_lines:
-            MAX_LINE_LENGTH = 41
-        else:
-            MAX_LINE_LENGTH = 38
-
-        first_word_in_current_line = current_line.split()[0]
-
-        previous_line_with_first_word_of_current_line = (
-            previous_line.strip() + ' ' + first_word_in_current_line
-        )
-
-        return len(previous_line_with_first_word_of_current_line) > MAX_LINE_LENGTH
-
-
     tokens = []
     course = None
     processing_course = False
     processing_FROM_and = False
     processing_non_course = False
 
-    for i, line in enumerate(raw_course_line_halves):
+    for line in raw_course_line_halves:
         match = _tokenize_.pattern.match(line)
         if match is not None:
             if processing_non_course:
@@ -319,16 +298,7 @@ def _tokenize_(raw_course_line_halves, *, are_TO_lines):
 
         else:
             if processing_non_course:
-                assert i > 0
-                if word_was_wrapped(
-                    previous_line=raw_course_line_halves[i-1],
-                    current_line=line,
-                    are_TO_lines=are_TO_lines
-                ):
-                    course['non-course'] += line.strip() + ' '
-                else:
-                    tokens.append(course)
-                    course = {'non-course': line.strip() + ' '}
+                course['non-course'] += line.strip() + ' '
             else:
                 if processing_course:
                     assert course is not None
