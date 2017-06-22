@@ -111,7 +111,11 @@ def _treeify_(tokens):
     def add_course(course):
         nonlocal latest_course_id
 
-        course_node = Node(tag=course['code'], data=course)
+        if 'no-articulation' in course:
+            course_node = Node(tag="No Articulation", data=course)
+        else:
+            tag = course['department'] + ' ' + course['cnum']
+            course_node = Node(tag=tag, data=course)
         tree.add_node(course_node, parent=active_operator_id())
         latest_course_id = course_node.identifier
 
@@ -157,7 +161,7 @@ def _treeify_(tokens):
 def _combine_tokens_(TO_tokens, FROM_tokens):
     combined_tokens = copy(FROM_tokens)
     TO_OPERATORS = ("AND", "TO_or")
-    TO_courses = [token for token in TO_tokens if _is_course_(token)]
+    TO_courses = [token for token in TO_tokens if _represents_course_(token)]
     last_course_index = -1
 
 
@@ -204,13 +208,17 @@ def _tokenize_(raw_course_line_halves):
         _tokenize_.pattern = regex.compile(
             r"""
             (?(DEFINE)
-                (?<title_char>[\w,;:\"\'&+-\/]
+                (?<department_char>[A-Z&\d\/.])
+                (?<title_char>[\w.,;:!\"\'&+-\/]
                              |(?!\(\d(?:\.\d)?\))[()])
                 (?<title_words>(?&title_char)+(?:\ (?&title_char)+)*)
             )
 
             ^
-            (?:(?<note>[*#@+%]+)\ *)?(?<code>[A-Z]+(?:\ [A-Z]+)*\ \d+[A-Z]*)
+            (?:(?<note>[*#@+%]+)\ *)?
+            (?<department>(?&department_char)+(?:\ (?&department_char)+)*)
+            \ 
+            (?<cnum>[\dA-Z]+[A-Z]*)
             \ +
             (?<FROM_and>&)?
             \ +
@@ -223,6 +231,7 @@ def _tokenize_(raw_course_line_halves):
             |^(?<TO_or>\ {5,}OR)
             |^(?<TO_and>\ +AND\ +)
 
+
             |^(?<no_articulation>[Nn][Oo].+[Aa]rticulat)
             |^(?<same_as>\ +Same\ as:)
 
@@ -230,7 +239,6 @@ def _tokenize_(raw_course_line_halves):
             """,
             regex.VERBOSE
         )
-
 
     def num(x):
         try:
@@ -261,9 +269,10 @@ def _tokenize_(raw_course_line_halves):
                     tokens.append({'operator': '&'})
                     processing_FROM_and = False
 
-            if match.captures("code"):
+            if match.captures("department"):
                 course = {
-                    "code": match.captures("code")[0],
+                    "department": match.captures("department")[0],
+                    "cnum": match.captures("cnum")[0],
                     "title": match.captures("title")[0],
                     "units": num(match.captures("units")[0])
                 }
@@ -271,8 +280,7 @@ def _tokenize_(raw_course_line_halves):
             elif match.captures("title_contd"):
                 course["title"] += match.captures("title_contd")[0]
             elif match.captures("no_articulation"):
-                tokens.append({'code': "No Course Articulated", 'title': "",
-                               'units': 0})
+                tokens.append({'no-articulation': None})
 
             if match.captures("FROM_and"):
                 processing_FROM_and = True
@@ -326,14 +334,14 @@ def _add_token_between_consecutive_courses_(filler_token, tokens):
         except IndexError:
             break
         else:
-            if _is_course_(current_token) and _is_course_(next_token):
+            if _represents_course_(current_token) and _represents_course_(next_token):
                 tokens_with_filler.append(filler_token)
 
     return tokens_with_filler
 
 
-def _is_course_(obj):
-    return isinstance(obj, dict) and "code" in obj
+def _represents_course_(obj):
+    return isinstance(obj, dict) and ('department' in obj or 'no-articulation' in obj)
 
 
 def _is_operator_(obj):
