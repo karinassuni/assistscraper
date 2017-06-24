@@ -9,11 +9,12 @@ from .lxml_helpers import document, find_by_name, find_select, option_labels
 
 
 __all__ = [
+    "all_codes_from_url",
     "articulation_html_from_page",
     "articulation_text_from_html",
     "articulation_url",
-    "codes_from_articulation_url",
     "current_articulation_year",
+    "institution_codes_from_url",
     "major_codes_map_from_html",
     "majors_url",
     "to_and_from_institution_maps",
@@ -136,7 +137,18 @@ def articulation_text_from_html(raw_html):
     )
 
 
-def codes_from_articulation_url(url):
+def institution_codes_from_url(url):
+    query = parse_qs(urlparse(url).query)
+
+    # "ia" = "Institution for Articulation"
+    # "oia" = "Other Institution for Articulation"
+    from_institution = query['ia'][0]
+    to_institution = query['oia'][0]
+
+    return from_institution, to_institution
+
+
+def all_codes_from_url(url):
     query = parse_qs(urlparse(url).query)
 
     # "ia" = "Institution for Articulation"
