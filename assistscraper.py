@@ -12,7 +12,7 @@ __all__ = [
     "articulation_html_from_page",
     "articulation_text_from_html",
     "articulation_url",
-    "current_articulation_year",
+    "articulation_years",
     "institution_codes_from_url",
     "major_codes_map_from_html",
     "majors_url",
@@ -20,14 +20,13 @@ __all__ = [
 ]
 
 
-def current_articulation_year():
-    if not current_articulation_year.year:
+def articulation_years():
+    if not articulation_years.years:
         # Look at any institution page to find the year; DAC was arbitrary
         # "ay" = "Articulation Year"
-        years = option_labels(find_select("ay", parent=document("DAC.html")))
-        current_articulation_year.year = years[0]
-    return current_articulation_year.year
-current_articulation_year.year = None
+        articulation_years.years = option_labels(find_select("ay", parent=document("DAC.html")))
+    return articulation_years.years
+articulation_years.years = None
 
 
 def to_and_from_institution_maps():
@@ -85,7 +84,7 @@ def majors_url(from_code, to_code):
         .format(
             from_=from_code,
             to=to_code,
-            year=current_articulation_year()
+            year=articulation_years()[0]
         )
     )
 
@@ -112,14 +111,16 @@ def major_codes_map_from_html(raw_html):
     }
 
 
-def articulation_url(from_code, to_code, major_code):
+def articulation_url(from_code, to_code, major_code, year=None):
+    if year is None:
+        year = articulation_years()[0]
     return (
         "http://web2.assist.org/cgi-bin/REPORT_2/Rep2.pl?aay={year}&dora={major}&oia={to}&ay={year}&event=19&ria={to}&agreement=aa&ia={from_}&sia={from_}&dir=1&&sidebar=false&rinst=left&mver=2&kind=5&dt=2"
         .format(
             from_=from_code,
             to=to_code,
             major=quote(major_code),
-            year=current_articulation_year()
+            year=year
         )
     )
 
