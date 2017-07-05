@@ -4,8 +4,7 @@ from urllib.parse import urlparse, parse_qs, quote
 
 from lxml import html
 
-from . import courses_parser
-from .lxml_helpers import document, find_by_name, find_select, option_labels
+from lxml_helpers import document, find_by_name, find_select, option_labels
 
 
 __all__ = [

@@ -5,14 +5,13 @@ setup(
     name='assistscraper',
     description='Library for scraping ASSIST.org',
     license='MIT',
-    version='1.3.1',
+    version='2.0.0',
     author='Karina Antonio',
     author_email='karinafantonio@gmail.com',
     url='https://github.com/karinassuni/assistscraper',
-    packages=['assistscraper'],
+    py_modules=['assistscraper'],
     install_requires=[
         'lxml',
         'regex',
-        'treelib',
     ],
 )
