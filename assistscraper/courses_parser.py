@@ -242,6 +242,8 @@ def _tokenize_(raw_course_line_halves):
             regex.VERBOSE
         )
         _tokenize_.special_info_pattern = regex.compile(r'\([A-Z\d]')
+        _tokenize_.parenthesized_info_opening = regex.compile(r'^\([A-Z\d]')
+        _tokenize_.parenthesized_info_closing = regex.compile(r'^[^)]+\) *$')
         _tokenize_.blank_line = regex.compile(r'^ *$')
 
     def num(x):
@@ -255,6 +257,7 @@ def _tokenize_(raw_course_line_halves):
     processing_course = False
     processing_FROM_and = False
     processing_info_token = False
+    processing_parenthesized_info = False
     processing_two_line_no_articulation = False
 
     for line in raw_course_line_halves:
@@ -323,10 +326,18 @@ def _tokenize_(raw_course_line_halves):
 
         else:
             if processing_info_token:
-                if _tokenize_.special_info_pattern.match(line):
+                if _tokenize_.parenthesized_info_opening.match(line):
                     token = {'info': token['info'].strip()}
                     tokens.append(token)
                     token = {'info': line.strip() + ' '}
+                    processing_parenthesized_info = True
+                elif processing_parenthesized_info \
+                and _tokenize_.parenthesized_info_closing.match(line):
+                    token['info'] += line.strip()
+                    tokens.append(token)
+                    token = None
+                    processing_parenthesized_info = False
+                    processing_info_token = False
                 else:
                     token['info'] += line.strip() + ' '
             else:
@@ -344,7 +355,8 @@ def _tokenize_(raw_course_line_halves):
     return tokens
 
 _tokenize_.pattern = None
-_tokenize_.special_info_pattern = None
+_tokenize_.parenthesized_info_opening = None
+_tokenize_.parenthesized_info_closing = None
 _tokenize_.blank_line = None
 
 
