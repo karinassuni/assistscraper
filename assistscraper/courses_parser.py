@@ -242,6 +242,7 @@ def _tokenize_(raw_course_line_halves):
             regex.VERBOSE
         )
         _tokenize_.special_info_pattern = regex.compile(r'\([A-Z\d]')
+        _tokenize_.blank_line = regex.compile(r'^ *$')
 
     def num(x):
         try:
@@ -250,7 +251,7 @@ def _tokenize_(raw_course_line_halves):
             return float(x)
 
     tokens = []
-    course = None
+    token = None
     processing_course = False
     processing_FROM_and = False
     processing_info_token = False
@@ -258,29 +259,29 @@ def _tokenize_(raw_course_line_halves):
 
     for line in raw_course_line_halves:
         if processing_two_line_no_articulation:
-            course['details'] += line.rstrip()
-            tokens.append(course)
+            token['details'] += line.rstrip()
+            tokens.append(token)
             processing_two_line_no_articulation = False
             continue
 
         match = _tokenize_.pattern.match(line)
         if match is not None:
             if processing_info_token:
-                course = {'info': course['info'].strip()}
-                tokens.append(course)
-                course = None
+                token = {'info': token['info'].strip()}
+                tokens.append(token)
+                token = None
                 processing_info_token = False
 
             if processing_course and not match.captures("title_contd"):
                 processing_course = False
-                tokens.append(course)
-                course = None
+                tokens.append(token)
+                token = None
                 if processing_FROM_and:
                     tokens.append({'operator': '&'})
                     processing_FROM_and = False
 
             if match.captures("department"):
-                course = {
+                token = {
                     "department": match.captures("department")[0],
                     "cnum": match.captures("cnum")[0],
                     "title": match.captures("title")[0],
@@ -288,12 +289,12 @@ def _tokenize_(raw_course_line_halves):
                 }
                 processing_course = True
             elif match.captures("title_contd"):
-                course["title"] += match.captures("title_contd")[0]
+                token["title"] += match.captures("title_contd")[0]
 
             elif match.captures("no_articulation"):
                 if match.captures("two_line_no_articulation"):
                     details = line[match.start('two_line_no_articulation'):]
-                    course = {'no-articulation': None, 'details': details}
+                    token = {'no-articulation': None, 'details': details}
                     processing_two_line_no_articulation = True
                 else:
                     tokens.append({'no-articulation': None})
@@ -312,38 +313,39 @@ def _tokenize_(raw_course_line_halves):
 
             if match.captures("note"):
                 assert processing_course
-                course["note"] = match.captures("note")[0]
+                token["note"] = match.captures("note")[0]
 
             if match.captures("same_as"):
                 continue
 
-        elif regex.match(r'^\s*$', line):
+        elif _tokenize_.blank_line.match(line):
             continue
 
         else:
             if processing_info_token:
                 if _tokenize_.special_info_pattern.match(line):
-                    course = {'info': course['info'].strip()}
-                    tokens.append(course)
-                    course = {'info': line.strip() + ' '}
+                    token = {'info': token['info'].strip()}
+                    tokens.append(token)
+                    token = {'info': line.strip() + ' '}
                 else:
-                    course['info'] += line.strip() + ' '
+                    token['info'] += line.strip() + ' '
             else:
                 if processing_course:
-                    assert course is not None
-                    tokens.append(course)
+                    assert token is not None
+                    tokens.append(token)
                     processing_course = False
                 processing_FROM_and = False
                 processing_info_token = True
-                course = {'info': line.strip() + ' '}
+                token = {'info': line.strip() + ' '}
 
-    if course:
-        tokens.append(course)
+    if token:
+        tokens.append(token)
 
     return tokens
 
 _tokenize_.pattern = None
 _tokenize_.special_info_pattern = None
+_tokenize_.blank_line = None
 
 
 def _add_token_between_consecutive_courses_(filler_token, tokens):
