@@ -48,7 +48,7 @@ def to_and_from_institution_maps():
         next(name_code_tuples)
 
         return {
-            name.strip(): strip_extension(code)
+            strip_extension(code): name.strip()
             for (name, code) in name_code_tuples
         }
 
@@ -70,10 +70,10 @@ def to_and_from_institution_maps():
     to_institutions = {}
     from_institutions = copy(all_institutions)
 
-    for name, code in all_institutions.items():
+    for code, name in all_institutions.items():
         if name in to_names:
-            to_institutions[name] = code
-            from_institutions.pop(name, None)
+            to_institutions[code] = name
+            from_institutions.pop(code, None)
 
     return to_institutions, from_institutions
 
