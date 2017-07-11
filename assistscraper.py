@@ -64,18 +64,23 @@ def to_and_from_institution_maps():
         return [name_substring.match(label).group(1) for label in name_labels]
 
 
-    all_institutions = all_institutions_map()
-    to_names = to_institution_names()
+    if not to_and_from_institution_maps.maps:
+        all_institutions = all_institutions_map()
+        to_names = to_institution_names()
 
-    to_institutions = {}
-    from_institutions = copy(all_institutions)
+        to_institutions = {}
+        from_institutions = copy(all_institutions)
 
-    for code, name in all_institutions.items():
-        if name in to_names:
-            to_institutions[code] = name
-            from_institutions.pop(code, None)
+        for code, name in all_institutions.items():
+            if name in to_names:
+                to_institutions[code] = name
+                from_institutions.pop(code, None)
 
-    return to_institutions, from_institutions
+        to_and_from_institution_maps.maps = to_institutions, from_institutions
+
+    return to_and_from_institution_maps.maps
+
+to_and_from_institution_maps.maps = None
 
 
 def majors_url(from_code, to_code):
