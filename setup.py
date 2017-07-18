@@ -5,7 +5,7 @@ setup(
     name='assistscraper',
     description='Library for scraping ASSIST.org',
     license='MIT',
-    version='3.2.1',
+    version='3.2.2',
     author='Karina Antonio',
     author_email='karinafantonio@gmail.com',
     url='https://github.com/karinassuni/assistscraper',

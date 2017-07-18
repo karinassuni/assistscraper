@@ -143,7 +143,12 @@ def articulation_urls_from_majors_page(majors_page, url):
         year_match = articulation_urls_from_majors_page.year_note_pattern.search(
             articulation_year_note.text
         )
-        year = year_match.group(1)
+        if year_match:
+            year = year_match.group(1)
+        else:
+            # Example of another "aynote": In 16-17 California State University,
+            # Hayward is California State University, East Bay
+            year = articulation_years(majors_page)[0]
     else:
         year = articulation_years(majors_page)[0]
 
