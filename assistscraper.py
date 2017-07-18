@@ -155,7 +155,7 @@ def articulation_urls_from_majors_page(majors_page, url):
     from_code, to_code = institution_codes_from_url(url)
 
     urls = [articulation_url(from_code, to_code, major_code, year)
-            for major_code in majors]
+            for major_code in majors.values()]
 
     return urls
 
