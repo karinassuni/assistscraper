@@ -4,13 +4,20 @@ from urllib.parse import urlparse, parse_qs, quote
 
 from lxml import html
 
-from lxml_helpers import document, find_by_name, find_select, option_labels
+from lxml_helpers import (
+    document,
+    find_by_class,
+    find_by_name,
+    find_select,
+    option_labels
+)
 
 
 __all__ = [
     "all_codes_from_url",
     "articulation_html_from_page",
     "articulation_text_from_html",
+    "articulation_urls_from_majors_page",
     "articulation_url",
     "articulation_years",
     "institution_codes_from_url",
@@ -20,11 +27,17 @@ __all__ = [
 ]
 
 
-def articulation_years():
+def articulation_years(majors_page=None):
     if not articulation_years.years:
-        # Look at any institution page to find the year; DAC was arbitrary
+        if majors_page:
+            root = html.fromstring(majors_page)
+        else:
+            # Look at any institution page to find the year; DAC was arbitrary
+            root = document("DAC.html")
+
         # "ay" = "Articulation Year"
-        articulation_years.years = option_labels(find_select("ay", parent=document("DAC.html")))
+        articulation_years.years = option_labels(find_select("ay", parent=root))
+
     return articulation_years.years
 articulation_years.years = None
 
@@ -83,20 +96,23 @@ def to_and_from_institution_maps():
 to_and_from_institution_maps.maps = None
 
 
-def majors_url(from_code, to_code):
+def majors_url(from_code, to_code, year=None):
+    if year is None:
+        year = articulation_years()[0]
+
     return (
         "http://www.assist.org/web-assist/articulationAgreement.do?inst1=none&inst2=none&ia={from_}&ay={year}&oia={to}&dir=1"
         .format(
             from_=from_code,
             to=to_code,
-            year=articulation_years()[0]
+            year=year
         )
     )
 
 
 def major_codes_map_from_html(raw_html):
     root = html.fromstring(raw_html)
-    major_form = find_by_name("form", "major", parent=root)
+    major_form = find_by_name("major", parent=root, tag="form")
 
     if major_form is None:
         return None
@@ -116,9 +132,37 @@ def major_codes_map_from_html(raw_html):
     }
 
 
+def articulation_urls_from_majors_page(majors_page, url):
+    majors = major_codes_map_from_html(majors_page)
+    if majors is None:
+        return None
+
+    root = html.fromstring(majors_page)
+    articulation_year_note = find_by_class("aynote", parent=root, tag='div')
+    if articulation_year_note.text:
+        year_match = articulation_urls_from_majors_page.year_note_pattern.search(
+            articulation_year_note.text
+        )
+        year = year_match.group(1)
+    else:
+        year = articulation_years(majors_page)[0]
+
+    from_code, to_code = institution_codes_from_url(url)
+
+    urls = [articulation_url(from_code, to_code, major_code, year)
+            for major_code in majors]
+
+    return urls
+
+articulation_urls_from_majors_page.year_note_pattern = re.compile(
+    r'The ([0-9]{2}-[0-9]{2}) agreement will be shown instead.'
+)
+
+
 def articulation_url(from_code, to_code, major_code, year=None):
     if year is None:
         year = articulation_years()[0]
+
     return (
         "http://web2.assist.org/cgi-bin/REPORT_2/Rep2.pl?aay={year}&dora={major}&oia={to}&ay={year}&event=19&ria={to}&agreement=aa&ia={from_}&sia={from_}&dir=1&&sidebar=false&rinst=left&mver=2&kind=5&dt=2"
         .format(
