@@ -120,15 +120,15 @@ def major_codes_map_from_html(raw_html):
     major_select = find_select("dora", parent=major_form)
     names = option_labels(major_select)
 
-    name_code_tuples = zip(names, major_select.value_options)
+    code_name_tuples = zip(major_select.value_options, names)
     # Skip the first two <option>s, the first being an instructional placeholder
     # value and the second being "All majors"
-    next(name_code_tuples)
-    next(name_code_tuples)
+    next(code_name_tuples)
+    next(code_name_tuples)
 
     return {
-        name: code
-        for (name, code) in name_code_tuples
+        code: name
+        for (code, name) in code_name_tuples
     }
 
 
