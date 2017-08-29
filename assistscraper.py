@@ -17,11 +17,10 @@ __all__ = [
     "all_codes_from_url",
     "articulation_html_from_page",
     "articulation_text_from_html",
-    "articulation_urls_from_majors_page",
     "articulation_url",
     "articulation_years",
     "institution_codes_from_url",
-    "major_codes_map_from_html",
+    "major_codes_map_from_majors_page",
     "majors_url",
     "to_and_from_institution_maps",
 ]
@@ -110,12 +109,26 @@ def majors_url(from_code, to_code, year=None):
     )
 
 
-def major_codes_map_from_html(raw_html):
+def major_codes_map_from_majors_page(raw_html):
     root = html.fromstring(raw_html)
     major_form = find_by_name("major", parent=root, tag="form")
 
     if major_form is None:
         return None
+
+    year = articulation_years()[0]
+    articulation_year_note = find_by_class("aynote", parent=root, tag='div')
+    if articulation_year_note.text:
+        # Example "aynote"s:
+        # "In 16-17 California State University, Hayward is California State
+        # University, East Bay"
+        # "The 10-11 agreement is not available. The 02-03 agreement will be
+        # shown instead." - Indicates that WHATEVER DESIRED YEAR isn't available
+        year_match = major_codes_map_from_majors_page.year_note_pattern.search(
+            articulation_year_note.text
+        )
+        if year_match:
+            year = year_match.group(1)
 
     major_select = find_select("dora", parent=major_form)
     names = option_labels(major_select)
@@ -127,39 +140,14 @@ def major_codes_map_from_html(raw_html):
     next(code_name_tuples)
 
     return {
-        code: name
-        for (code, name) in code_name_tuples
+        "year": year,
+        "majors": {
+            code: name
+            for (code, name) in code_name_tuples
+        }
     }
 
-
-def articulation_urls_from_majors_page(majors_page, url):
-    majors = major_codes_map_from_html(majors_page)
-    if majors is None:
-        return None
-
-    root = html.fromstring(majors_page)
-    articulation_year_note = find_by_class("aynote", parent=root, tag='div')
-    if articulation_year_note.text:
-        year_match = articulation_urls_from_majors_page.year_note_pattern.search(
-            articulation_year_note.text
-        )
-        if year_match:
-            year = year_match.group(1)
-        else:
-            # Example of another "aynote": In 16-17 California State University,
-            # Hayward is California State University, East Bay
-            year = articulation_years(majors_page)[0]
-    else:
-        year = articulation_years(majors_page)[0]
-
-    from_code, to_code = institution_codes_from_url(url)
-
-    urls = [articulation_url(from_code, to_code, major_code, year)
-            for major_code in majors.values()]
-
-    return urls
-
-articulation_urls_from_majors_page.year_note_pattern = re.compile(
+major_codes_map_from_majors_page.year_note_pattern = re.compile(
     r'The ([0-9]{2}-[0-9]{2}) agreement will be shown instead.'
 )
 
